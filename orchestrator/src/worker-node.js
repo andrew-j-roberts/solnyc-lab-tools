@@ -1,9 +1,9 @@
 /**
- * perf-host.js
+ * worker-node.js
  * @author Andrew Roberts
  */
 
-function PerfHost(ipString, numCpusParam) {
+function WorkerNode(ipString, numCpusParam) {
   let ip = ipString;
   let numCpus = numCpusParam;
 
@@ -21,4 +21,4 @@ function PerfHost(ipString, numCpusParam) {
   };
 }
 
-export default PerfHost;
+export default WorkerNode;

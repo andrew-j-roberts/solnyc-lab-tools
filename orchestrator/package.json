@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --watch src --exec yarn run test",
-    "test": "jest test/perf-host.test.js"
+    "test": "jest test/worker-node.test.js"
   },
   "jest": {
     "transform": {

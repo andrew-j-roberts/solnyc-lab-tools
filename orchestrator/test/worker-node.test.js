@@ -1,4 +1,4 @@
-import PerfHost from "../src/perf-host";
+import WorkerNode from "../src/worker-node";
 
 // Tests follow this pattern:
 // describe('[unit of work]', () => {
@@ -8,15 +8,15 @@ import PerfHost from "../src/perf-host";
 // });
 // https://github.com/mawrkus/js-unit-testing-guide#name-your-tests-properly
 
-describe("A PerfHost instance", () => {
+describe("A WorkerNode instance", () => {
   describe("when initialized", () => {
     it("should properly return the ip it was initialized with", () => {
-      let dummyPerfHost = PerfHost("192.168.0.20", 6);
-      expect(dummyPerfHost.getIp()).toBe("192.168.0.20");
+      let dummyWorkerNode = WorkerNode("192.168.0.20", 6);
+      expect(dummyWorkerNode.getIp()).toBe("192.168.0.20");
     });
     it("should properly return how many CPUs it has available", () => {
-      let dummyPerfHost = PerfHost("192.168.0.20", 6);
-      expect(dummyPerfHost.getNumCpus()).toBe(6);
+      let dummyWorkerNode = WorkerNode("192.168.0.20", 6);
+      expect(dummyWorkerNode.getNumCpus()).toBe(6);
     });
   });
 });
