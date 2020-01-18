@@ -1,0 +1,26 @@
+{
+  "name": "solnyc-gui",
+  "version": "1.0.0",
+  "description": "GUI to drive pre-canned tests using our lab",
+  "main": "index.js",
+  "author": "Andrew Roberts",
+  "license": "MIT",
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "dependencies": {
+    "core-js": "^3.6.4",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "regenerator-runtime": "^0.13.3",
+    "reset.css": "^2.0.2",
+    "styled-components": "^5.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-react": "^7.8.3",
+    "babel-plugin-styled-components": "^1.10.6"
+  }
+}

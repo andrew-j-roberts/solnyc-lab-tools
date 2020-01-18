@@ -1,0 +1,31 @@
+{
+  "name": "orchestrator",
+  "version": "1.0.0",
+  "description": "coordinates running sdkperf processes on perf hosts",
+  "main": "index.js",
+  "author": "Andrew Roberts",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon --watch src --exec yarn run test",
+    "test": "jest"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0"
+  },
+  "dependencies": {
+    "core-js": "^3.6.4",
+    "immer": "^5.3.2",
+    "regenerator-runtime": "^0.13.3",
+    "shelljs": "^0.8.3",
+    "xstate": "^4.7.6"
+  }
+}
