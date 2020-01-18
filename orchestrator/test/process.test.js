@@ -1,6 +1,6 @@
 import Process from "../src/process";
 
-// Tests following pattern:
+// Tests follow this pattern:
 // describe('[unit of work]', () => {
 //   describe('when [scenario/context]', () => {
 //     it('should [expected behaviour]', () => {});
