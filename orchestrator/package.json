@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --watch src --exec yarn run test",
-    "test": "jest test/worker-node.test.js"
+    "test": "jest test/orchestrator.test.js --silent"
   },
   "jest": {
     "transform": {
