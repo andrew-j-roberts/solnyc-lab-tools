@@ -7,8 +7,14 @@ import produce from "immer";
 import WorkerNode from "../src/worker-node";
 
 function Orchestrator() {
-  // produces empty immutable Map
-  let workerNodes = produce(new Map(), draft => {});
+  let workerNodes = produce(new Map(), draft => {}); // produces empty immutable Map
+  let jobsList = produce(new Map(), draft => {});
+  let jobGroups = produce(new Map(), draft => {});
+
+  const Job = {
+    id: 0,
+    commandString: "sdkperf_command"
+  };
 
   function interpret(configObj) {
     // Developer note:

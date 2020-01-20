@@ -5,6 +5,7 @@
 
 import Orchestrator from "../src/orchestrator";
 import WorkerNode from "../src/worker-node";
+import Job from "../src/job";
 
 // Tests follow this pattern:
 // describe('[unit of work]', () => {
@@ -16,17 +17,22 @@ import WorkerNode from "../src/worker-node";
 
 describe("An Orchestrator instance", () => {
   describe("when initialized", () => {
-    it("should be able to add a WorkerNode to its list of allowed worker nodes when addWorkerNode is called", () => {
+    it("should be able to add a WorkerNode to its list of worker nodes when addWorkerNode is called", () => {
       let dummyOrchestrator = Orchestrator();
       let dummyWorkerNode = WorkerNode("192.168.0.20", 6);
       let setResult = dummyOrchestrator.addWorkerNode(dummyWorkerNode);
       expect(setResult).toBe(true);
     });
-    it("should fail to add a malformed WorkerNode to its list of allowed worker nodes when addWorkerNode is called", () => {
+    it("should fail to add a malformed WorkerNode to its list of worker nodes when addWorkerNode is called", () => {
       let dummyOrchestrator = Orchestrator();
       let malformedWorkerNode = null;
       let setResult = dummyOrchestrator.addWorkerNode(malformedWorkerNode);
       expect(setResult).toBe(false);
+    });
+    it("should be able to add a Job to its jobs list", () => {
+      let dummyOrchestrator = Orchestrator();
+      let dummyJob = Job(123, "./foo -bar");
+      let addResult = dummyOrchestrator.addJob();
     });
   });
   describe("when passed a config file", () => {
@@ -42,7 +48,7 @@ describe("An Orchestrator instance", () => {
         }
       ]
     };
-    it("should properly add the worker nodes specified in the config file to its allowed list of worker nodes", () => {
+    it("should properly add the worker nodes specified in the config file to its list of worker nodes", () => {
       let dummyOrchestrator = Orchestrator();
       dummyOrchestrator.interpret(dummyConfigObj);
       expect(dummyOrchestrator.getWorkerNodes()).toMatchInlineSnapshot(`
@@ -59,8 +65,8 @@ describe("An Orchestrator instance", () => {
       `);
     });
   });
-  describe("when allowed worker nodes have been added", () => {
-    it("should return correct map of allowed worker nodes when getWorkerNodes is called", () => {
+  describe("when worker nodes have been added", () => {
+    it("should properly return map of worker nodes when getWorkerNodes is called", () => {
       let dummyOrchestrator = Orchestrator();
       let dummyWorkerNode1 = WorkerNode("192.168.0.20", 6);
       let dummyWorkerNode2 = WorkerNode("192.168.0.21", 6);
@@ -100,7 +106,7 @@ describe("An Orchestrator instance", () => {
       expect(removeResult).toBe(false);
     });
   });
-  describe("when allowed worker nodes have not been added", () => {
+  describe("when worker nodes have not been added", () => {
     it("should return an empty map when getWorkerNodes is called", () => {
       let dummyOrchestrator = Orchestrator();
       expect(dummyOrchestrator.getWorkerNodes()).toMatchInlineSnapshot(
