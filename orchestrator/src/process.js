@@ -43,7 +43,7 @@ function Process(commandStringParam = "") {
   let pid = null;
   let exitCode = null;
 
-  // interpret:
+  // xstate/interpret:
   // a function that takes a machine, instantiates it,
   // maintains the state of the machine,
   // and gives us the ability to send events to it.

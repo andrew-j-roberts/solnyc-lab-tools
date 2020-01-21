@@ -1,3 +1,8 @@
+/**
+ * worker-node.test.js
+ * @author Andrew Roberts
+ */
+
 import WorkerNode from "../src/worker-node";
 
 // Tests follow this pattern:

@@ -16,6 +16,7 @@ function WorkerNode(ipString, numCpusParam) {
   }
 
   return {
+    assignJobToCpu,
     getIp,
     getNumCpus
   };

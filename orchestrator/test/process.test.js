@@ -1,3 +1,8 @@
+/**
+ * process.test.js
+ * @author Andrew Roberts
+ */
+
 import Process from "../src/process";
 
 // Tests follow this pattern:

@@ -15,6 +15,14 @@ function SDKPerfCommand(languageString, optionsMap) {
     rest: "sdkperf_rest"
   };
 
+  function getLanguage() {
+    return language;
+  }
+
+  function getOptions() {
+    return options;
+  }
+
   function getCommandString() {
     // get alias to execute appropriate sdkperf implementation
     let sdkperfAlias = sdkperfAliasesDict[language];
@@ -28,6 +36,8 @@ function SDKPerfCommand(languageString, optionsMap) {
   }
 
   return {
+    getLanguage,
+    getOptions,
     getCommandString
   };
 }

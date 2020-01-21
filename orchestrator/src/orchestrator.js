@@ -8,6 +8,7 @@ import WorkerNode from "../src/worker-node";
 
 function Orchestrator() {
   let workerNodes = produce(new Map(), draft => {}); // produces empty immutable Map
+  let cpuUsage = produce(new Map(), draft => {});
   let jobsList = produce(new Map(), draft => {});
   let jobGroups = produce(new Map(), draft => {});
 
@@ -15,6 +16,8 @@ function Orchestrator() {
     id: 0,
     commandString: "sdkperf_command"
   };
+
+  function start() {}
 
   function interpret(configObj) {
     // Developer note:
@@ -36,6 +39,14 @@ function Orchestrator() {
       console.log("Config file can't be interpreted, check it for errors!");
       process.exit(1);
     }
+  }
+
+  function assignJobToCpu(workerNodeIp, cpuNum, jobId) {
+    cpuUsageMap = produce(cpuUsageMap, draft => {
+      let test = draft.get(workerNodeIp);
+      console.log(test);
+    });
+    return true;
   }
 
   function getWorkerNodes() {
@@ -63,6 +74,7 @@ function Orchestrator() {
   }
 
   return {
+    start,
     interpret,
     getWorkerNodes,
     addWorkerNode,

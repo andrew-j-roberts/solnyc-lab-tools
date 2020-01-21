@@ -105,6 +105,11 @@ describe("An Orchestrator instance", () => {
       let removeResult = dummyOrchestrator.removeWorkerNode("192.168.0.21");
       expect(removeResult).toBe(false);
     });
+    it("should be able to assign a process to a worker node's CPU", () => {
+      let dummyOrchestrator = Orchestrator();
+      let dummyWorkerNode = WorkerNode("192.168.0.20", 6);
+      let setResult = dummyOrchestrator.addWorkerNode(dummyWorkerNode);
+    });
   });
   describe("when worker nodes have not been added", () => {
     it("should return an empty map when getWorkerNodes is called", () => {
