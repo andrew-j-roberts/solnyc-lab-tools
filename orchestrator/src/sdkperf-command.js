@@ -3,43 +3,31 @@
  * @author Andrew Roberts
  */
 
-function SDKPerfCommand(languageString, optionsMap) {
-  let language = languageString;
-  let options = optionsMap;
+const sdkPerfAliasesDict = {
+  C: "sdkperf_c",
+  CS: "sdkperf_cs",
+  JAVA: "sdkperf_java",
+  MQTT: "sdkperf_mqtt",
+  REST: "sdkperf_rest"
+};
 
-  let sdkperfAliasesDict = {
-    c: "sdkperf_c",
-    cs: "sdkperf_cs",
-    java: "sdkperf_java",
-    mqtt: "sdkperf_mqtt",
-    rest: "sdkperf_rest"
-  };
-
-  function getLanguage() {
-    return language;
-  }
-
-  function getOptions() {
-    return options;
-  }
-
+function SdkPerfCommand(language, options) {
+  // form and return command string
   function getCommandString() {
-    // get alias to execute appropriate sdkperf implementation
-    let sdkperfAlias = sdkperfAliasesDict[language];
-    // form options string from options
+    let sdkperfAlias = sdkPerfAliasesDict[language];
     let optionsString = "";
-    options.forEach((value, optionFlag) => {
-      optionsString = optionsString + ` ${optionFlag}=${value}`;
-    });
-    // +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+    for (let key of Object.keys(options)) {
+      optionsString = optionsString + ` ${key}=${options[key]}`;
+    }
+
     return `${sdkperfAlias}${optionsString}`;
   }
 
-  return {
-    getLanguage,
-    getOptions,
+  return Object.freeze({
+    language,
+    options,
     getCommandString
-  };
+  });
 }
 
-export default SDKPerfCommand;
+export default SdkPerfCommand;

@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --watch src --exec yarn run test",
-    "test": "jest test/sdkperf-command.test.js --silent"
+    "test": "jest test/job.test.js --silent"
   },
   "jest": {
     "transform": {

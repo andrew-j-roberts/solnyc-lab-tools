@@ -17,11 +17,11 @@ describe("A WorkerNode instance", () => {
   describe("when initialized", () => {
     it("should properly return the ip it was initialized with", () => {
       let dummyWorkerNode = WorkerNode("192.168.0.20", 6);
-      expect(dummyWorkerNode.getIp()).toBe("192.168.0.20");
+      expect(dummyWorkerNode.ip).toBe("192.168.0.20");
     });
     it("should properly return how many CPUs it has available", () => {
       let dummyWorkerNode = WorkerNode("192.168.0.20", 6);
-      expect(dummyWorkerNode.getNumCpus()).toBe(6);
+      expect(dummyWorkerNode.numCpus).toBe(6);
     });
   });
 });

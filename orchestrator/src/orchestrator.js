@@ -28,10 +28,7 @@ function Orchestrator() {
     // the config to be passed to it in JSON format.
     try {
       configObj.workerNodes.forEach(function(workerNodeConfigObj) {
-        let workerNode = WorkerNode(
-          workerNodeConfigObj.ip,
-          workerNodeConfigObj.numCpus
-        );
+        let workerNode = WorkerNode(workerNodeConfigObj.ip, workerNodeConfigObj.numCpus);
         addWorkerNode(workerNode);
       });
     } catch (e) {
