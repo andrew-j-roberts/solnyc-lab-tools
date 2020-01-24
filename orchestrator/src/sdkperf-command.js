@@ -3,6 +3,8 @@
  * @author Andrew Roberts
  */
 
+import produce from "immer";
+
 const sdkPerfAliasesDict = {
   C: "sdkperf_c",
   CS: "sdkperf_cs",
@@ -19,14 +21,13 @@ function SdkPerfCommand(language, options) {
     for (let key of Object.keys(options)) {
       optionsString = optionsString + ` ${key}=${options[key]}`;
     }
-
     return `${sdkperfAlias}${optionsString}`;
   }
 
-  return Object.freeze({
-    language,
-    options,
-    getCommandString
+  return produce({}, draft => {
+    draft.language = language;
+    draft.options = options;
+    draft.getCommandString = getCommandString;
   });
 }
 

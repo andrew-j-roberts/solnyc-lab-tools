@@ -15,32 +15,38 @@ const jobMachine = Machine({
   states: {
     new: {
       on: {
-        JOB_STARTED: "running"
+        SEND: "queued"
       }
     },
     running: {
       on: {
-        ERROR: "idle",
-        INTERRUPT: "idle",
-        JOB_FINISHED_SUCCESS: "idle",
-        JOB_FINISHED_FAILURE: "idle"
+        ERROR: "stopped",
+        INTERRUPT: "stopped",
+        FINISH_SUCCESS: "stopped",
+        FINISH_FAILURE: "stopped"
       }
     },
-    idle: {
+    stopped: {
       on: {
-        RUN: "running"
+        SEND: "queued"
+      }
+    },
+    queued: {
+      on: {
+        EXECUTE: "running",
+        CANCEL: "stopped"
       }
     }
   }
 });
 
-function Job(id, name, command) {
+function Job(id, name, command, stateMachine = jobMachine.initialState) {
   // immer produce: returns deep frozen object
   return produce({}, draft => {
     draft.id = id;
     draft.name = name;
     draft.command = command;
-    draft.jobMachine = jobMachine; // jobMachine set to initial state
+    draft.stateMachine = stateMachine;
   });
 }
 

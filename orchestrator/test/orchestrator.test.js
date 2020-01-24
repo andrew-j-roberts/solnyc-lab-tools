@@ -3,6 +3,7 @@
  * @author Andrew Roberts
  */
 
+import produce from "immer";
 import Orchestrator from "../src/orchestrator";
 import WorkerNode from "../src/worker-node";
 import Job from "../src/job";
@@ -17,106 +18,78 @@ import Job from "../src/job";
 
 describe("An Orchestrator instance", () => {
   describe("when initialized", () => {
-    it("should be able to add a WorkerNode to its list of worker nodes when addWorkerNode is called", () => {
+    // getters
+    it("should properly return its worker nodes list", () => {
       let dummyOrchestrator = Orchestrator();
       let dummyWorkerNode = WorkerNode("192.168.0.20", 6);
       let setResult = dummyOrchestrator.addWorkerNode(dummyWorkerNode);
+      const desiredWorkerNodeList = produce({}, draft => {
+        draft["192.168.0.20"] = dummyWorkerNode;
+      });
+      expect(dummyOrchestrator.getWorkerNodes()).toMatchObject(desiredWorkerNodeList);
+    });
+    it("should properly return its jobs list", () => {
+      let dummyOrchestrator = Orchestrator();
+      let dummyWorkerNode = WorkerNode("192.168.0.20", 6);
+      let setResult = dummyOrchestrator.addWorkerNode(dummyWorkerNode);
+      let dummyJob = Job(123, "Consumer", "./foo -bar=qux");
+      dummyOrchestrator.addJob(dummyJob);
+      const desiredJobList = produce({}, draft => {
+        draft[123] = dummyJob;
+      });
+      expect(dummyOrchestrator.getJobs()).toMatchObject(desiredJobList);
+    });
+    // it("should properly return its job groups list", () => {
+    //   let dummyOrchestrator = Orchestrator();
+    //   let dummyWorkerNode = WorkerNode("192.168.0.20", 6);
+    //   let setResult = dummyOrchestrator.addWorkerNode(dummyWorkerNode);
+    //   let dummyJob = Job(123, "Consumer", "./foo -bar=qux");
+    //   dummyOrchestrator.addJob(dummyJob);
+    // });
+    it("should properly return its job assignments list", () => {
+      let dummyOrchestrator = Orchestrator();
+      let dummyWorkerNode = WorkerNode("192.168.0.20", 6);
+      dummyOrchestrator.addWorkerNode(dummyWorkerNode);
+      let dummyJob = Job(123, "Consumer", "./foo -bar=qux");
+      dummyOrchestrator.addJob(dummyJob);
+      dummyOrchestrator.assignJob(dummyJob.id, dummyWorkerNode.ip, [1, 2, 3]);
+      console.log(dummyOrchestrator.getJobAssignments());
+      let desiredJobAssignmentObject = { "123": { workerNodeIp: "192.168.0.20", cpuNumbers: [1, 2, 3] } };
+      expect(dummyOrchestrator.getJobAssignments()).toMatchObject(desiredJobAssignmentObject);
+    });
+    // methods
+    it("should be able to add a WorkerNode to its list of worker nodes", () => {
+      let dummyOrchestrator = Orchestrator();
+      let dummyWorkerNode = WorkerNode("192.168.0.20", 6);
+      let setResult = dummyOrchestrator.addWorkerNode(dummyWorkerNode);
+      const desiredWorkerNodeList = produce({}, draft => {
+        draft["192.168.0.20"] = dummyWorkerNode;
+      });
       expect(setResult).toBe(true);
     });
-    it("should fail to add a malformed WorkerNode to its list of worker nodes when addWorkerNode is called", () => {
-      let dummyOrchestrator = Orchestrator();
-      let malformedWorkerNode = null;
-      let setResult = dummyOrchestrator.addWorkerNode(malformedWorkerNode);
-      expect(setResult).toBe(false);
-    });
-    it("should be able to add a Job to its jobs list", () => {
-      let dummyOrchestrator = Orchestrator();
-      let dummyJob = Job(123, "./foo -bar");
-      let addResult = dummyOrchestrator.addJob();
-    });
-  });
-  describe("when passed a config file", () => {
-    const dummyConfigObj = {
-      workerNodes: [
-        {
-          ip: "192.168.0.20",
-          numCpus: 4
-        },
-        {
-          ip: "192.168.0.21",
-          numCpus: 4
-        }
-      ]
-    };
-    it("should properly add the worker nodes specified in the config file to its list of worker nodes", () => {
-      let dummyOrchestrator = Orchestrator();
-      dummyOrchestrator.interpret(dummyConfigObj);
-      expect(dummyOrchestrator.getWorkerNodes()).toMatchInlineSnapshot(`
-        Map {
-          "192.168.0.20" => Object {
-            "getIp": [Function],
-            "getNumCpus": [Function],
-          },
-          "192.168.0.21" => Object {
-            "getIp": [Function],
-            "getNumCpus": [Function],
-          },
-        }
-      `);
-    });
-  });
-  describe("when worker nodes have been added", () => {
-    it("should properly return map of worker nodes when getWorkerNodes is called", () => {
+    it("should **not** be able to add duplicate WorkerNode to its list of worker nodes", () => {
       let dummyOrchestrator = Orchestrator();
       let dummyWorkerNode1 = WorkerNode("192.168.0.20", 6);
-      let dummyWorkerNode2 = WorkerNode("192.168.0.21", 6);
+      let dummyWorkerNode2 = WorkerNode("192.168.0.20", 6);
       let setResult1 = dummyOrchestrator.addWorkerNode(dummyWorkerNode1);
       let setResult2 = dummyOrchestrator.addWorkerNode(dummyWorkerNode2);
-      // found this map snapshotting technique here: https://immerjs.github.io/immer/docs/complex-objects
-      expect(dummyOrchestrator.getWorkerNodes()).toMatchInlineSnapshot(`
-        Map {
-          "192.168.0.20" => Object {
-            "getIp": [Function],
-            "getNumCpus": [Function],
-          },
-          "192.168.0.21" => Object {
-            "getIp": [Function],
-            "getNumCpus": [Function],
-          },
-        }
-      `);
+      expect(setResult1).toBe(true);
+      expect(setResult2).toBe(false);
     });
-    it("should remove a worker node from the workerNodes list when removeWorkerNode is called on its IP", () => {
+    it("should be able to add a job to its jobs list", () => {
       let dummyOrchestrator = Orchestrator();
-      let dummyWorkerNode = WorkerNode("192.168.0.20", 6);
-      let setResult = dummyOrchestrator.addWorkerNode(dummyWorkerNode);
-      let removeResult = dummyOrchestrator.removeWorkerNode(
-        dummyWorkerNode.getIp()
-      );
-      expect(removeResult).toBe(true);
-      expect(
-        dummyOrchestrator.getWorkerNodes().get(dummyWorkerNode.getIp())
-      ).toBeUndefined();
+      let dummyJob = Job(123, "Consumer Job", "./foo -bar=baz");
+      let setResult = dummyOrchestrator.addJob(dummyJob);
+      expect(setResult).toBe(true);
     });
-    it("should return false if removeWorkerNode is called on an IP that does not exist in workerNodes", () => {
+    it("should **not** be able to add duplicate jobs to its jobs list", () => {
       let dummyOrchestrator = Orchestrator();
-      let dummyWorkerNode = WorkerNode("192.168.0.20", 6);
-      let setResult = dummyOrchestrator.addWorkerNode(dummyWorkerNode);
-      let removeResult = dummyOrchestrator.removeWorkerNode("192.168.0.21");
-      expect(removeResult).toBe(false);
-    });
-    it("should be able to assign a process to a worker node's CPU", () => {
-      let dummyOrchestrator = Orchestrator();
-      let dummyWorkerNode = WorkerNode("192.168.0.20", 6);
-      let setResult = dummyOrchestrator.addWorkerNode(dummyWorkerNode);
-    });
-  });
-  describe("when worker nodes have not been added", () => {
-    it("should return an empty map when getWorkerNodes is called", () => {
-      let dummyOrchestrator = Orchestrator();
-      expect(dummyOrchestrator.getWorkerNodes()).toMatchInlineSnapshot(
-        `Map {}`
-      );
+      let dummyJob1 = Job(123, "Consumer Job", "./foo -bar=baz");
+      let dummyJob2 = Job(123, "Consumer Job", "./foo -bar=baz");
+      let setResult1 = dummyOrchestrator.addJob(dummyJob1);
+      let setResult2 = dummyOrchestrator.addJob(dummyJob2);
+      expect(setResult1).toBe(true);
+      expect(setResult2).toBe(false);
     });
   });
 });

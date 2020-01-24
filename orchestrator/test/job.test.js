@@ -49,5 +49,14 @@ describe("A Job instance", () => {
         }
       `);
     });
+    it("should properly return its state", () => {
+      let dummyOptionsObj = {
+        "-cip": "localhost",
+        "-stl": "foo"
+      };
+      let dummySdkPerfCommand = SdkPerfCommand("c", dummyOptionsObj);
+      let dummyJob = Job(1, "Basic C Consumer", dummySdkPerfCommand);
+      expect(dummyJob.stateMachine.value).toBe("new");
+    });
   });
 });
