@@ -18,6 +18,12 @@ const jobMachine = Machine({
         SEND: "queued"
       }
     },
+    queued: {
+      on: {
+        EXECUTE: "running",
+        CANCEL: "stopped"
+      }
+    },
     running: {
       on: {
         ERROR: "stopped",
@@ -29,12 +35,6 @@ const jobMachine = Machine({
     stopped: {
       on: {
         SEND: "queued"
-      }
-    },
-    queued: {
-      on: {
-        EXECUTE: "running",
-        CANCEL: "stopped"
       }
     }
   }

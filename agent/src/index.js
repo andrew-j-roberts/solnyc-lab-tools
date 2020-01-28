@@ -14,7 +14,7 @@ if (result.error) {
 }
 
 import Agent from "./agent";
-import { MqttSubscriber } from "./mqtt-clients";
+import MqttClient from "./mqtt-client";
 import {
   handleExecuteJobEvent,
   handleInterruptJobEvent
@@ -34,51 +34,33 @@ async function run() {
     password: process.env.SOLACE_PASSWORD
   };
 
-  // initialize and connect publisher
-  let publisher;
+  // initialize and connect mqtt client
+  let mqttClient;
   try {
-    executeJobListener = MqttSubscriber(mqttClientConfig);
-    await executeJobListener.connect();
+    mqttClient = MqttClient(mqttClientConfig);
+    await mqttClient.connect();
   } catch (err) {
-    console.err(err);
-  }
-
-  // initialize and connect execute job listener
-  let executeJobListener;
-  try {
-    executeJobListener = MqttSubscriber(mqttClientConfig);
-    await executeJobListener.connect();
-  } catch (err) {
-    console.err(err);
-  }
-
-  // initialize and connect interrupt job listener
-  let interruptJobListener;
-  try {
-    interruptJobListener = MqttSubscriber(mqttClientConfig);
-    await interruptJobListener.connect();
-  } catch (err) {
-    console.err(err);
+    console.error(err);
   }
 
   // use partial application to include agent and publisher in event handlers' scopes
-  let executeJobEventHandler = handleExecuteJobEvent(agent, publisher);
-  let interruptJobEventHandler = handleInterruptJobEvent(agent, publisher);
+  let executeJobEventHandler = handleExecuteJobEvent(agent, mqttClient);
+  let interruptJobEventHandler = handleInterruptJobEvent(agent, mqttClient);
 
-  // add event handlers to listeners
+  // add event handlers to mqtt client
   try {
-    await executeJobListener.addEventHandler(
+    await mqttClient.addEventHandler(
       `${topicPrefix}/Execute/${workerNodeId}`,
       event => executeJobEventHandler(event),
       1 // qos
     );
-    await interruptJobListener.addEventHandler(
+    await mqttClient.addEventHandler(
       `${topicPrefix}/Interrupt/${workerNodeId}`,
       event => interruptJobEventHandler(event),
       1 // qos
     );
   } catch (err) {
-    console.err(err);
+    console.error(err);
   }
 
   // run until a kill signal is received

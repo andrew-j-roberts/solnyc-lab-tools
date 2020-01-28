@@ -1,28 +1,35 @@
 /**
- * mqtt-clients.js
+ * mqtt-client.js
  * @author Andrew Roberts
  */
 
 import mqtt from "mqtt";
 import produce from "immer";
 
-function MqttSubscriber({ hostUrl, username, password }) {
+function MqttClient({ hostUrl, username, password }) {
   let client = null;
   let eventHandlers = produce({}, draft => {});
 
   // connects client to message broker and ensures connack is received
   async function connect() {
     return new Promise((resolve, reject) => {
-      client = mqtt.connect(hostUrl, { username: username, password: password });
+      client = mqtt.connect(hostUrl, {
+        username: username,
+        password: password
+      });
       client.on("message", (topic, message) => {
         if (eventHandlers[topic]) {
-          console.log(`Received message on topic ${topic}: ${message.toString()}`);
+          console.log(
+            `Received message on topic ${topic}: ${message.toString()}`
+          );
           eventHandlers[topic](message);
         } else {
-          console.error(`Received messages on topic ${topic}, but no corresponding handler is set.`);
+          console.error(
+            `Received messages on topic ${topic}, but no corresponding handler is set.`
+          );
         }
       });
-      client.on("connect", () => {
+      client.on("connect", function onConnAck() {
         resolve(client);
       });
     });
@@ -44,11 +51,13 @@ function MqttSubscriber({ hostUrl, username, password }) {
         draft[topic] = handler;
       });
       // subscribe to topic on client
-      client.subscribe(topic, { qos }, function(err, granted) {
+      client.subscribe(topic, { qos }, function onSubAck(err, granted) {
         // guard: err != null indicates a subscription error or an error that occurs when client is disconnecting
         if (err) reject(err);
         // else, subscription is verified
-        console.log(`Suback received for topic "${granted[0].topic}" using QOS ${granted[0].qos}`);
+        console.log(
+          `Suback received for topic "${granted[0].topic}" using QOS ${granted[0].qos}`
+        );
         resolve();
       });
     });
@@ -70,7 +79,7 @@ function MqttSubscriber({ hostUrl, username, password }) {
         delete draft[topic];
       });
       // unsubscribe from topic on client
-      client.unsubscribe(topic, null, function(err) {
+      client.unsubscribe(topic, null, function onUnsubAck(err) {
         // guard: err != null indicates an error occurs if client is disconnecting
         if (err) reject(err);
         // else, unsubscription verified
@@ -80,26 +89,28 @@ function MqttSubscriber({ hostUrl, username, password }) {
     });
   }
 
+  // publishes message to provided topic and ensures puback is received
+  async function send(topic, message, qos = 0) {
+    return new Promise((resolve, reject) => {
+      // guard: prevent attempting to interact with client that does not exist
+      if (!client) {
+        reject("Client has not connected yet");
+      }
+
+      client.publish(topic, message, { qos }, function onPubAck(err) {
+        // guard: err != null indicates client is disconnecting
+        if (err) reject(err);
+        resolve();
+      });
+    });
+  }
+
   return produce({}, draft => {
     draft.connect = connect;
     draft.addEventHandler = addEventHandler;
     draft.removeEventHandler = removeEventHandler;
+    draft.send = send;
   });
 }
 
-function MqttPublisher({ hostUrl, username, password }) {
-  return new Promise((resolve, reject) => {
-    let client = mqtt.connect(hostUrl, { username: username, password: password });
-
-    client.on("message", (topic, message) => {
-      console.log(`Received message on topic ${topic}: ${message.toString()}`);
-    });
-
-    client.on("connect", () => {
-      client.subscribe("foo", function(err) {});
-      resolve(client);
-    });
-  });
-}
-
-export { MqttSubscriber, MqttPublisher };
+export default MqttClient;
