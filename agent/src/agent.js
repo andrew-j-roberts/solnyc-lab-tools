@@ -8,14 +8,12 @@ import produce from "immer";
 function Agent() {
   let processes = produce({}, draft => {});
 
-  // getters
   function getProcesses() {
     return processes;
   }
 
-  // methods
   function addProcess(process) {
-    // prevent agent from attempting to add a duplicate process
+    // guard: prevent agent from attempting to add a duplicate process
     if (process.jobId in processes) {
       return false;
     }
@@ -26,7 +24,7 @@ function Agent() {
   }
 
   function interruptProcess(jobId) {
-    // prevent agent from attempting to stop a job that doesn't exist
+    // guard: prevent agent from attempting to stop a job that doesn't exist
     if (!(jobId in processes)) {
       return false;
     }
@@ -34,11 +32,11 @@ function Agent() {
   }
 
   function removeProcess(jobId) {
-    // prevent agent from attempting to remove a job that do not exist
+    // guard: prevent agent from attempting to remove a job that do not exist
     if (!(jobId in processes)) {
       return false;
     }
-    // prevent agent from removing a job that has not exited
+    // guard: prevent agent from removing a job that has not exited
     processes = produce(processes, draft => {
       delete draft[jobId];
     });

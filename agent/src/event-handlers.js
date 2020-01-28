@@ -6,8 +6,8 @@
 import shelljs from "shelljs";
 import Process from "./process";
 
-function handleExecuteJobEvent(event, agent) {
-  // prevent agent from executing duplicate jobs
+const handleExecuteJobEvent = (agent, publisher) => event => {
+  // guard: prevent agent from executing duplicate jobs
   if (agent.getProcesses()[event.jobId]) {
     return false;
   }
@@ -26,14 +26,14 @@ function handleExecuteJobEvent(event, agent) {
   // });
   let process = Process(event.jobId, processRef);
   return agent.addProcess(process);
-}
+};
 
-function handleInterruptJobEvent(event, agent) {
-  // prevent agent from trying to stop a job that doesn't exist
+const handleInterruptJobEvent = (agent, publisher) => event => {
+  // guard: prevent agent from trying to stop a job that doesn't exist
   if (!agent.getProcesses()[event.jobId]) {
     return false;
   }
   return agent.interruptJob(event.jobId);
-}
+};
 
 export { handleExecuteJobEvent, handleInterruptJobEvent };
