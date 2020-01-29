@@ -10,6 +10,9 @@ function MqttClient({ hostUrl, username, password }) {
   let client = null;
   let eventHandlers = produce({}, draft => {});
 
+  // initialize topic prefix to env variable
+  let topicPrefix = process.env.SOLACE_TOPIC_PREFIX;
+
   // connects client to message broker and ensures connack is received
   async function connect() {
     return new Promise((resolve, reject) => {
@@ -48,10 +51,13 @@ function MqttClient({ hostUrl, username, password }) {
       }
       // add event handler
       eventHandlers = produce(eventHandlers, draft => {
-        draft[topic] = handler;
+        draft[`${topicPrefix}/${topic}`] = handler;
       });
       // subscribe to topic on client
-      client.subscribe(topic, { qos }, function onSubAck(err, granted) {
+      client.subscribe(`${topicPrefix}/${topic}`, { qos }, function onSubAck(
+        err,
+        granted
+      ) {
         // guard: err != null indicates a subscription error or an error that occurs when client is disconnecting
         if (err) reject(err);
         // else, subscription is verified
@@ -76,10 +82,12 @@ function MqttClient({ hostUrl, username, password }) {
       }
       // remove event handler
       eventHandlers = produce(eventHandlers, draft => {
-        delete draft[topic];
+        delete draft[`${topicPrefix}/${topic}`];
       });
       // unsubscribe from topic on client
-      client.unsubscribe(topic, null, function onUnsubAck(err) {
+      client.unsubscribe(`${topicPrefix}/${topic}`, null, function onUnsubAck(
+        err
+      ) {
         // guard: err != null indicates an error occurs if client is disconnecting
         if (err) reject(err);
         // else, unsubscription verified
@@ -97,11 +105,16 @@ function MqttClient({ hostUrl, username, password }) {
         reject("Client has not connected yet");
       }
 
-      client.publish(topic, message, { qos }, function onPubAck(err) {
-        // guard: err != null indicates client is disconnecting
-        if (err) reject(err);
-        resolve();
-      });
+      client.publish(
+        `${topicPrefix}/${topic}`,
+        message,
+        { qos }, // options
+        function onPubAck(err) {
+          // guard: err != null indicates client is disconnecting
+          if (err) reject(err);
+          resolve();
+        }
+      );
     });
   }
 

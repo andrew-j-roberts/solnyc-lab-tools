@@ -6,43 +6,47 @@
 import shelljs from "shelljs";
 import Process from "./process";
 import {
-  ExecuteJobEvent,
-  InterruptJobEvent,
-  JobInfoEvent,
-  JobErrorEvent,
-  JobExitEvent,
-  JobStartEvent
+  JobCmdExecuteEvent,
+  JobCmdInterruptEvent,
+  JobLogEvent,
+  JobSysEvent
 } from "./events";
 
-// TODO: potentially wrap this in a promise
-const handleExecuteJobEvent = (agent, mqttClient) => event => {
+const handleExecuteJobEvent = (agent, mqttClient) => async event => {
+  // parse event
+  let eventObj = JSON.parse(event.toString());
+
   // guard: prevent agent from executing duplicate jobs
-  if (agent.getProcesses()[event.jobId]) {
+  if (agent.getProcesses()[eventObj.jobId]) {
     return false;
   }
   // guard: attempt to parse event, fail if message is malformed
   let executeJobEvent;
   try {
-    executeJobEvent = ExecuteJobEvent(JSON.parse(event.toString()));
+    executeJobEvent = JobCmdExecuteEvent(eventObj);
   } catch (err) {
+    console.error(
+      "Message received by handleExecuteJobEvent was malformed, unable to process."
+    );
     return false;
   }
-
-  // initialize topic prefix to env variable
-  let topicPrefix = process.env.SOLACE_TOPIC_PREFIX;
 
   // start process
   let processRef = shelljs.exec(executeJobEvent.commandString, { async: true });
 
-  // pipe process outputs to Solace
+  // pipe process outputs to Solace broker
   processRef.stdout.on("data", async data => {
-    // form payload for message
-    let payload = JobInfoEvent({ jobId: executeJobEvent.jobId, data });
+    // stdout gets piped to Solace as an info level log event
+    let payload = JobLogEvent({
+      jobId: executeJobEvent.jobId,
+      level: "INFO",
+      data: data,
+      timestamp: Date.now()
+    });
     payload = JSON.stringify(payload);
-    // stdout: publish on Info/Job/<JobID>
     try {
       let res = await mqttClient.send(
-        `${topicPrefix}/Info/Job/${executeJobEvent.jobId}`,
+        `Job/${executeJobEvent.jobId}/LOG/INFO`,
         payload,
         1 // qos
       );
@@ -53,13 +57,17 @@ const handleExecuteJobEvent = (agent, mqttClient) => event => {
   });
 
   processRef.stderr.on("data", async data => {
-    // form payload for message
-    let payload = JobErrorEvent({ jobId: executeJobEvent.jobId, data });
+    // stderr gets piped to Solace as an error level log event
+    let payload = JobLogEvent({
+      jobId: executeJobEvent.jobId,
+      level: "ERROR",
+      data: data,
+      timestamp: Date.now()
+    });
     payload = JSON.stringify(payload);
-    // stderr: publish on Error/Job/<JobID>
     try {
       let res = await mqttClient.send(
-        `${topicPrefix}/Error/Job/${executeJobEvent.jobId}`,
+        `Job/${executeJobEvent.jobId}/LOG/ERROR`,
         payload,
         1 // qos
       );
@@ -70,13 +78,18 @@ const handleExecuteJobEvent = (agent, mqttClient) => event => {
   });
 
   processRef.on("exit", async function(code, signal) {
-    // form payload for message
-    let payload = JobExitEvent({ jobId: executeJobEvent.jobId, code, signal });
+    // exit gets piped to Solace as a sys event
+    let data = { code, signal };
+    let payload = JobSysEvent({
+      jobId: executeJobEvent.jobId,
+      type: "EXITED",
+      data: data,
+      timestamp: Date.now()
+    });
     payload = JSON.stringify(payload);
-    // exit: publish on Exit/Job/<JobID>
     try {
       let res = await mqttClient.send(
-        `${topicPrefix}/Exit/Job/${executeJobEvent.jobId}`,
+        `Job/${executeJobEvent.jobId}/SYS/EXITED`,
         payload,
         1 // qos
       );
@@ -92,12 +105,18 @@ const handleExecuteJobEvent = (agent, mqttClient) => event => {
   // add process to agent so that it can keep track of active processes
   agent.addProcess(process);
 
-  // publish job running event now that its process is running
-  let payload = JobStartEvent({ jobId: executeJobEvent.jobId });
+  // publish a SYS event to indicate the process is running
+  let data = null;
+  let payload = JobSysEvent({
+    jobId: executeJobEvent.jobId,
+    type: "STARTED",
+    data: data,
+    timestamp: Date.now()
+  });
   payload = JSON.stringify(payload);
   try {
     let res = await mqttClient.send(
-      `${topicPrefix}/Running/Job/${executeJobEvent.jobId}`,
+      `Job/${executeJobEvent.jobId}/SYS/STARTED`,
       payload,
       1 // qos
     );
@@ -106,17 +125,35 @@ const handleExecuteJobEvent = (agent, mqttClient) => event => {
     return false;
   }
 
-  mqttClient.send("", JSON.stringify({ abc: 123, def: "test" }), 1);
-
   return true;
 };
 
-const handleInterruptJobEvent = (agent, publisher) => event => {
-  // guard: prevent agent from trying to stop a job that doesn't exist
-  if (!agent.getProcesses()[event.jobId]) {
+const handleInterruptJobEvent = agent => async event => {
+  // parse event
+  let eventObj = JSON.parse(event.toString());
+
+  // guard: prevent agent from executing duplicate jobs
+  if (agent.getProcesses()[eventObj.jobId]) {
     return false;
   }
-  return agent.interruptJob(event.jobId);
+  // guard: validate event structure, fail if event is malformed
+  let interruptJobEvent;
+  try {
+    interruptJobEvent = JobCmdInterruptEvent(eventObj);
+  } catch (err) {
+    console.error(
+      "Message received by handleInterruptJobEvent was malformed, unable to process."
+    );
+    return false;
+  }
+
+  // kill process, which will trigger a SYS/EXITED event
+  agent.interruptProcess(interruptJobEvent.jobId);
+
+  // remove process from agent
+  agent.removeProcess(interruptJobEvent.jobId);
+
+  return true;
 };
 
 export { handleExecuteJobEvent, handleInterruptJobEvent };

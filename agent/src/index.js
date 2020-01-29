@@ -23,16 +23,13 @@ import {
 async function run() {
   let agent = Agent();
 
-  // initialize topic prefix and worker node id to env variables
-  let topicPrefix = process.env.SOLACE_TOPIC_PREFIX;
-  let workerNodeId = process.env.WORKER_NODE_ID;
-
-  // initialize mqtt client config properties to env variables
+  // initialize mqtt client config properties and workerId to env variables
   let mqttClientConfig = {
     hostUrl: process.env.SOLACE_MQTT_HOST_URL,
     username: process.env.SOLACE_USERNAME,
     password: process.env.SOLACE_PASSWORD
   };
+  let workerId = process.env.WORKER_ID;
 
   // initialize and connect mqtt client
   let mqttClient;
@@ -43,19 +40,19 @@ async function run() {
     console.error(err);
   }
 
-  // use partial application to include agent and publisher in event handlers' scopes
+  // use partial application to include agent and/or publisher in event handlers' scopes
   let executeJobEventHandler = handleExecuteJobEvent(agent, mqttClient);
-  let interruptJobEventHandler = handleInterruptJobEvent(agent, mqttClient);
+  let interruptJobEventHandler = handleInterruptJobEvent(agent);
 
   // add event handlers to mqtt client
   try {
     await mqttClient.addEventHandler(
-      `${topicPrefix}/Execute/${workerNodeId}`,
+      `Worker/${workerNodeId}/Job/*/CMD/Execute`,
       event => executeJobEventHandler(event),
       1 // qos
     );
     await mqttClient.addEventHandler(
-      `${topicPrefix}/Interrupt/${workerNodeId}`,
+      `Worker/${workerNodeId}/Job/*/CMD/Interrupt`,
       event => interruptJobEventHandler(event),
       1 // qos
     );

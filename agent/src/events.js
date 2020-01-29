@@ -1,56 +1,41 @@
 /**
- * index.js
+ * events.js
  * @author Andrew Roberts
  */
 
 import produce from "immer";
 
-function ExecuteJobEvent({ jobId, commandString }) {
+function JobCmdExecuteEvent({ jobId, commandString, timestamp }) {
   return produce({}, draft => {
     draft.jobId = jobId;
     draft.commandString = commandString;
+    draft.timestamp = timestamp;
   });
 }
 
-function InterruptJobEvent({ jobId }) {
+function JobCmdInterruptEvent({ jobId, timestamp }) {
   return produce({}, draft => {
     draft.jobId = jobId;
+    draft.timestamp = timestamp;
   });
 }
 
-function JobInfoEvent({ jobId, data }) {
+function JobLogEvent({ jobId, level, data, timestamp }) {
   return produce({}, draft => {
     draft.jobId = jobId;
+    draft.level = level;
     draft.data = data;
+    draft.timestamp = timestamp;
   });
 }
 
-function JobErrorEvent({ jobId, data }) {
+function JobSysEvent({ jobId, type, data, timestamp }) {
   return produce({}, draft => {
     draft.jobId = jobId;
+    draft.type = type;
     draft.data = data;
+    draft.timestamp = timestamp;
   });
 }
 
-function JobExitEvent({ jobId, code, signal }) {
-  return produce({}, draft => {
-    draft.jobId = jobId;
-    draft.code = code;
-    draft.signal = signal;
-  });
-}
-
-function JobStartEvent({ jobId }) {
-  return produce({}, draft => {
-    draft.jobId = jobId;
-  });
-}
-
-export {
-  ExecuteJobEvent,
-  InterruptJobEvent,
-  JobInfoEvent,
-  JobErrorEvent,
-  JobExitEvent,
-  JobStartEvent
-};
+export { JobCmdExecuteEvent, JobCmdInterruptEvent, JobLogEvent, JobSysEvent };
