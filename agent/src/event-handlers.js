@@ -34,7 +34,7 @@ const handleExecuteJobEvent = (agent, mqttClient) => event => {
   // start process
   let processRef = shelljs.exec(executeJobEvent.commandString, { async: true });
 
-  // configure the process's pipes
+  // pipe process outputs to Solace
   processRef.stdout.on("data", async data => {
     // form payload for message
     let payload = JobInfoEvent({ jobId: executeJobEvent.jobId, data });
@@ -89,10 +89,10 @@ const handleExecuteJobEvent = (agent, mqttClient) => event => {
   // create process object to map job id to its process ref
   let process = Process({ jobId: executeJobEvent.jobId, processRef });
 
-  // add process to agent to keep track of active processes
+  // add process to agent so that it can keep track of active processes
   agent.addProcess(process);
 
-  // send update job event
+  // publish job running event now that its process is running
   let payload = JobStartEvent({ jobId: executeJobEvent.jobId });
   payload = JSON.stringify(payload);
   try {
@@ -105,7 +105,7 @@ const handleExecuteJobEvent = (agent, mqttClient) => event => {
     console.error(err);
     return false;
   }
-  
+
   mqttClient.send("", JSON.stringify({ abc: 123, def: "test" }), 1);
 
   return true;
