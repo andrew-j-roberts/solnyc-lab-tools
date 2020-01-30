@@ -1,7 +1,7 @@
 {
-  "name": "solnyc-gui",
+  "name": "dtopish-gui",
   "version": "1.0.0",
-  "description": "GUI to drive pre-canned tests using our lab",
+  "description": "GUI for running and managing jobs",
   "main": "index.js",
   "author": "Andrew Roberts",
   "license": "MIT",
@@ -10,12 +10,17 @@
     "build": "parcel build index.html"
   },
   "dependencies": {
+    "@chakra-ui/core": "^0.5.2",
+    "@emotion/core": "^10.0.27",
+    "@emotion/styled": "^10.0.27",
     "core-js": "^3.6.4",
+    "emotion-theming": "^10.0.27",
+    "formik": "^2.1.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-select": "^3.0.8",
     "regenerator-runtime": "^0.13.3",
-    "reset.css": "^2.0.2",
-    "styled-components": "^5.0.0"
+    "reset.css": "^2.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
