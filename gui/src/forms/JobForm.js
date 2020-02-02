@@ -1,6 +1,6 @@
 /**
  * JobForm.js
- * Implements a CLI command builder using Formik and react-select.
+ * Implements a CLI command builder using Formik and react-select
  * @author Andrew Roberts
  */
 
@@ -79,7 +79,11 @@ export default function JobForm() {
                 <FormLabel htmlFor="jobType" w={"100%"}>
                   Name
                 </FormLabel>
-                <Input {...field} id="name" placeholder="E.g. basic sdkperf_mqtt consumer" />
+                <Input
+                  {...field}
+                  id="name"
+                  placeholder="E.g. basic sdkperf_mqtt consumer"
+                />
               </FormControl>
             )}
           </Field>
@@ -159,7 +163,14 @@ function CommandBuilder({ command, values }) {
   const { onCopy, hasCopied } = useClipboard(`${command} ${options}`);
 
   return (
-    <Stack isInline bg="gray.800" height="66px" alignItems="center" spacing={2} px={4}>
+    <Stack
+      isInline
+      bg="gray.800"
+      height="66px"
+      alignItems="center"
+      spacing={2}
+      px={4}
+    >
       <Text color="gray.50" fontSize={"lg"} fontFamily="mono">
         ▶
       </Text>
@@ -176,6 +187,7 @@ function CommandBuilder({ command, values }) {
   );
 }
 
+// could put these in separate files if the line count scares you *shrugs*
 function SdkperfCForm({ jobName }) {
   return (
     <div>
@@ -215,7 +227,12 @@ function SdkperfCForm({ jobName }) {
               <Accordion allowMultiple>
                 <AccordionItem>
                   <AccordionHeader borderBottom="1px solid #CCC">
-                    <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                    <Flex
+                      flex="1"
+                      height="30px"
+                      textAlign="left"
+                      alignItems="center"
+                    >
                       Connection Options
                     </Flex>
                     <AccordionIcon />
@@ -227,20 +244,32 @@ function SdkperfCForm({ jobName }) {
                         form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                         meta
                       }) => (
-                        <FormControl marginBottom={theme.space[4]} isInvalid={errors.cip && touched.cip}>
+                        <FormControl
+                          marginBottom={theme.space[4]}
+                          isInvalid={errors.cip && touched.cip}
+                        >
                           <FormLabel htmlFor="cip" w={"100%"}>
                             <Grid templateColumns="150px 1fr">
                               <Box>
                                 <Text>-cip=host</Text>
                               </Box>
                               <Box>
-                                <Text fontStyle="italic" as="i" color="gray.500">
-                                  host (often IP:port) of the Solace PubSub+ event broker
+                                <Text
+                                  fontStyle="italic"
+                                  as="i"
+                                  color="gray.500"
+                                >
+                                  host (often IP:port) of the Solace PubSub+
+                                  event broker
                                 </Text>
                               </Box>
                             </Grid>
                           </FormLabel>
-                          <Input {...field} id="cip" placeholder="E.g. localhost:55555" />
+                          <Input
+                            {...field}
+                            id="cip"
+                            placeholder="E.g. localhost:55555"
+                          />
                           <FormErrorMessage>{errors.cip}</FormErrorMessage>
                         </FormControl>
                       )}
@@ -251,20 +280,31 @@ function SdkperfCForm({ jobName }) {
                         form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                         meta
                       }) => (
-                        <FormControl marginBottom={theme.space[4]} isInvalid={errors.cu && touched.cu}>
+                        <FormControl
+                          marginBottom={theme.space[4]}
+                          isInvalid={errors.cu && touched.cu}
+                        >
                           <FormLabel htmlFor="cu" w={"100%"}>
                             <Grid templateColumns="150px 1fr">
                               <Box>
                                 <Text>‑cu=user[@vpn]</Text>
                               </Box>
                               <Box>
-                                <Text fontStyle="italic" as="i" color="gray.500">
+                                <Text
+                                  fontStyle="italic"
+                                  as="i"
+                                  color="gray.500"
+                                >
                                   client username and message VPN name
                                 </Text>
                               </Box>
                             </Grid>
                           </FormLabel>
-                          <Input {...field} id="cu" placeholder="E.g. user01@vpn01" />
+                          <Input
+                            {...field}
+                            id="cu"
+                            placeholder="E.g. user01@vpn01"
+                          />
                           <FormErrorMessage>{errors.cu}</FormErrorMessage>
                         </FormControl>
                       )}
@@ -275,14 +315,21 @@ function SdkperfCForm({ jobName }) {
                         form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                         meta
                       }) => (
-                        <FormControl marginBottom={theme.space[4]} isInvalid={errors.cp && touched.cp}>
+                        <FormControl
+                          marginBottom={theme.space[4]}
+                          isInvalid={errors.cp && touched.cp}
+                        >
                           <FormLabel htmlFor="cp" w={"100%"}>
                             <Grid templateColumns="150px 1fr">
                               <Box>
                                 <Text>‑cp=string</Text>
                               </Box>
                               <Box>
-                                <Text fontStyle="italic" as="i" color="gray.500">
+                                <Text
+                                  fontStyle="italic"
+                                  as="i"
+                                  color="gray.500"
+                                >
                                   client password
                                 </Text>
                               </Box>
@@ -299,14 +346,21 @@ function SdkperfCForm({ jobName }) {
                         form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                         meta
                       }) => (
-                        <FormControl marginBottom={theme.space[4]} isInvalid={errors.cc && touched.cc}>
+                        <FormControl
+                          marginBottom={theme.space[4]}
+                          isInvalid={errors.cc && touched.cc}
+                        >
                           <FormLabel htmlFor="cc" w={"100%"}>
                             <Grid templateColumns="150px 1fr">
                               <Box>
                                 <Text>‑cc=int</Text>
                               </Box>
                               <Box>
-                                <Text fontStyle="italic" as="i" color="gray.500">
+                                <Text
+                                  fontStyle="italic"
+                                  as="i"
+                                  color="gray.500"
+                                >
                                   number of client connections
                                 </Text>
                               </Box>
@@ -323,15 +377,23 @@ function SdkperfCForm({ jobName }) {
                         form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                         meta
                       }) => (
-                        <FormControl marginBottom={theme.space[4]} isInvalid={errors.z && touched.z}>
+                        <FormControl
+                          marginBottom={theme.space[4]}
+                          isInvalid={errors.z && touched.z}
+                        >
                           <FormLabel htmlFor="z" w={"100%"}>
                             <Grid templateColumns="150px 1fr">
                               <Box>
                                 <Text>‑z=int</Text>
                               </Box>
                               <Box>
-                                <Text fontStyle="italic" as="i" color="gray.500">
-                                  enables compression and specifies compression level
+                                <Text
+                                  fontStyle="italic"
+                                  as="i"
+                                  color="gray.500"
+                                >
+                                  enables compression and specifies compression
+                                  level
                                 </Text>
                               </Box>
                             </Grid>
@@ -345,7 +407,12 @@ function SdkperfCForm({ jobName }) {
                 </AccordionItem>
                 <AccordionItem>
                   <AccordionHeader borderBottom="1px solid #CCC">
-                    <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                    <Flex
+                      flex="1"
+                      height="30px"
+                      textAlign="left"
+                      alignItems="center"
+                    >
                       Subscription Options
                     </Flex>
                     <AccordionIcon />
@@ -364,8 +431,13 @@ function SdkperfCForm({ jobName }) {
                                 <Text>-sql=list</Text>
                               </Box>
                               <Box>
-                                <Text fontStyle="italic" as="i" color="gray.500">
-                                  list of queue names from which clients will receive messages
+                                <Text
+                                  fontStyle="italic"
+                                  as="i"
+                                  color="gray.500"
+                                >
+                                  list of queue names from which clients will
+                                  receive messages
                                 </Text>
                               </Box>
                             </Grid>
@@ -382,7 +454,9 @@ function SdkperfCForm({ jobName }) {
                               { label: "baz", value: "baz" },
                               { label: "qux", value: "qux" }
                             ]}
-                            placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                            placeholder={
+                              "Select from common topics or type and press enter to add custom topics to the list..."
+                            }
                             isMulti={true}
                           />
                         </FormControl>
@@ -401,8 +475,14 @@ function SdkperfCForm({ jobName }) {
                                 <Text>-stl=list</Text>
                               </Box>
                               <Box>
-                                <Text fontStyle="italic" as="i" color="gray.500">
-                                  list of topics that are applied as subscriptions (or mapped onto queues if used with –sql)
+                                <Text
+                                  fontStyle="italic"
+                                  as="i"
+                                  color="gray.500"
+                                >
+                                  list of topics that are applied as
+                                  subscriptions (or mapped onto queues if used
+                                  with –sql)
                                 </Text>
                               </Box>
                             </Grid>
@@ -419,7 +499,9 @@ function SdkperfCForm({ jobName }) {
                               { label: "baz", value: "baz" },
                               { label: "qux", value: "qux" }
                             ]}
-                            placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                            placeholder={
+                              "Select from common topics or type and press enter to add custom topics to the list..."
+                            }
                             isMulti={true}
                           />
                         </FormControl>
@@ -438,8 +520,13 @@ function SdkperfCForm({ jobName }) {
                                 <Text>-tqe=int</Text>
                               </Box>
                               <Box>
-                                <Text fontStyle="italic" as="i" color="gray.500">
-                                  number of temporary queue endpoints to create per client.
+                                <Text
+                                  fontStyle="italic"
+                                  as="i"
+                                  color="gray.500"
+                                >
+                                  number of temporary queue endpoints to create
+                                  per client.
                                 </Text>
                               </Box>
                             </Grid>
@@ -452,7 +539,12 @@ function SdkperfCForm({ jobName }) {
                 </AccordionItem>
                 <AccordionItem>
                   <AccordionHeader borderBottom="1px solid #CCC">
-                    <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                    <Flex
+                      flex="1"
+                      height="30px"
+                      textAlign="left"
+                      alignItems="center"
+                    >
                       Publishing Options
                     </Flex>
                     <AccordionIcon />
@@ -471,8 +563,13 @@ function SdkperfCForm({ jobName }) {
                                 <Text>-pql=list</Text>
                               </Box>
                               <Box>
-                                <Text fontStyle="italic" as="i" color="gray.500">
-                                  list of queue names to which messages will be published
+                                <Text
+                                  fontStyle="italic"
+                                  as="i"
+                                  color="gray.500"
+                                >
+                                  list of queue names to which messages will be
+                                  published
                                 </Text>
                               </Box>
                             </Grid>
@@ -489,7 +586,9 @@ function SdkperfCForm({ jobName }) {
                               { label: "baz", value: "baz" },
                               { label: "qux", value: "qux" }
                             ]}
-                            placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                            placeholder={
+                              "Select from common topics or type and press enter to add custom topics to the list..."
+                            }
                             isMulti={true}
                           />
                         </FormControl>
@@ -508,8 +607,13 @@ function SdkperfCForm({ jobName }) {
                                 <Text>-ptl=list</Text>
                               </Box>
                               <Box>
-                                <Text fontStyle="italic" as="i" color="gray.500">
-                                  list of topics to which messages will be published
+                                <Text
+                                  fontStyle="italic"
+                                  as="i"
+                                  color="gray.500"
+                                >
+                                  list of topics to which messages will be
+                                  published
                                 </Text>
                               </Box>
                             </Grid>
@@ -526,7 +630,9 @@ function SdkperfCForm({ jobName }) {
                               { label: "baz", value: "baz" },
                               { label: "qux", value: "qux" }
                             ]}
-                            placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                            placeholder={
+                              "Select from common topics or type and press enter to add custom topics to the list..."
+                            }
                             isMulti={true}
                           />
                         </FormControl>
@@ -545,8 +651,13 @@ function SdkperfCForm({ jobName }) {
                                 <Text>-mt=string</Text>
                               </Box>
                               <Box>
-                                <Text fontStyle="italic" as="i" color="gray.500">
-                                  message type for published messages, default is "direct"
+                                <Text
+                                  fontStyle="italic"
+                                  as="i"
+                                  color="gray.500"
+                                >
+                                  message type for published messages, default
+                                  is "direct"
                                 </Text>
                               </Box>
                             </Grid>
@@ -556,7 +667,10 @@ function SdkperfCForm({ jobName }) {
                             form={form}
                             options={[
                               { label: "persistent", value: "persistent" },
-                              { label: "nonpersistent", value: "nonpersistent" },
+                              {
+                                label: "nonpersistent",
+                                value: "nonpersistent"
+                              },
                               { label: "direct", value: "direct" }
                             ]}
                             placeholder={"Select..."}
@@ -578,7 +692,11 @@ function SdkperfCForm({ jobName }) {
                                 <Text>-mn=int</Text>
                               </Box>
                               <Box>
-                                <Text fontStyle="italic" as="i" color="gray.500">
+                                <Text
+                                  fontStyle="italic"
+                                  as="i"
+                                  color="gray.500"
+                                >
                                   total number of messages to publish
                                 </Text>
                               </Box>
@@ -594,14 +712,21 @@ function SdkperfCForm({ jobName }) {
                         form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                         meta
                       }) => (
-                        <FormControl marginBottom={theme.space[4]} isInvalid={errors.mr && touched.mr}>
+                        <FormControl
+                          marginBottom={theme.space[4]}
+                          isInvalid={errors.mr && touched.mr}
+                        >
                           <FormLabel htmlFor="mr">
                             <Grid templateColumns="150px 1fr">
                               <Box>
                                 <Text>-mr=int</Text>
                               </Box>
                               <Box>
-                                <Text fontStyle="italic" as="i" color="gray.500">
+                                <Text
+                                  fontStyle="italic"
+                                  as="i"
+                                  color="gray.500"
+                                >
                                   publishing rate in messages per second
                                 </Text>
                               </Box>
@@ -625,8 +750,13 @@ function SdkperfCForm({ jobName }) {
                                 <Text>-msa=list</Text>
                               </Box>
                               <Box>
-                                <Text fontStyle="italic" as="i" color="gray.500">
-                                  list of sizes in bytes for auto-generated binary attachment payloads
+                                <Text
+                                  fontStyle="italic"
+                                  as="i"
+                                  color="gray.500"
+                                >
+                                  list of sizes in bytes for auto-generated
+                                  binary attachment payloads
                                 </Text>
                               </Box>
                             </Grid>
@@ -642,7 +772,9 @@ function SdkperfCForm({ jobName }) {
                               { label: "1 KB", value: "1000" },
                               { label: "10 KB", value: "10000" }
                             ]}
-                            placeholder={"Select from common attachment sizes or type and press enter to add custom sizes to the list..."}
+                            placeholder={
+                              "Select from common attachment sizes or type and press enter to add custom sizes to the list..."
+                            }
                             isMulti={true}
                           />
                         </FormControl>
@@ -652,7 +784,12 @@ function SdkperfCForm({ jobName }) {
                 </AccordionItem>
                 <AccordionItem>
                   <AccordionHeader borderBottom="1px solid #CCC">
-                    <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                    <Flex
+                      flex="1"
+                      height="30px"
+                      textAlign="left"
+                      alignItems="center"
+                    >
                       General Options
                     </Flex>
                     <AccordionIcon />
@@ -664,19 +801,29 @@ function SdkperfCForm({ jobName }) {
                         form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                         meta
                       }) => (
-                        <FormControl marginBottom={theme.space[4]} isInvalid={errors.q && touched.q}>
+                        <FormControl
+                          marginBottom={theme.space[4]}
+                          isInvalid={errors.q && touched.q}
+                        >
                           <Grid templateColumns="75px 1fr 200px" columnGap={4}>
                             <Box>
                               <Text>-q</Text>
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                enable quiet mode to suppress real time message rates
+                                enable quiet mode to suppress real time message
+                                rates
                               </Text>
                             </Box>
                             <Stack isInline spacing={4}>
                               <Text>Enabled?</Text>
-                              <Input {...field} id="q" type="checkbox" width="auto" height="auto" />
+                              <Input
+                                {...field}
+                                id="q"
+                                type="checkbox"
+                                width="auto"
+                                height="auto"
+                              />
                             </Stack>
                           </Grid>
                           <FormErrorMessage>{errors.q}</FormErrorMessage>
@@ -689,19 +836,29 @@ function SdkperfCForm({ jobName }) {
                         form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                         meta
                       }) => (
-                        <FormControl marginBottom={theme.space[4]} isInvalid={errors.md && touched.md}>
+                        <FormControl
+                          marginBottom={theme.space[4]}
+                          isInvalid={errors.md && touched.md}
+                        >
                           <Grid templateColumns="75px 1fr 200px" columnGap={4}>
                             <Box>
                               <Text>-md</Text>
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                dump all received messages to the screen as text. Do not use this with high message rates.
+                                dump all received messages to the screen as
+                                text. Do not use this with high message rates.
                               </Text>
                             </Box>
                             <Stack isInline spacing={4}>
                               <Text>Enabled?</Text>
-                              <Input {...field} id="md" type="checkbox" width="auto" height="auto" />
+                              <Input
+                                {...field}
+                                id="md"
+                                type="checkbox"
+                                width="auto"
+                                height="auto"
+                              />
                             </Stack>
                           </Grid>
                           <FormErrorMessage>{errors.md}</FormErrorMessage>
@@ -712,7 +869,13 @@ function SdkperfCForm({ jobName }) {
                 </AccordionItem>
               </Accordion>
             </Stack>
-            <Button w="100%" variantColor="green" type="submit" disabled={isSubmitting} marginTop={theme.space[10]}>
+            <Button
+              w="100%"
+              variantColor="green"
+              type="submit"
+              disabled={isSubmitting}
+              marginTop={theme.space[10]}
+            >
               Submit
             </Button>
           </Form>
@@ -759,7 +922,12 @@ function SdkperfJavaForm({ jobName }) {
             <Accordion allowMultiple>
               <AccordionItem>
                 <AccordionHeader borderBottom="1px solid #CCC">
-                  <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                  <Flex
+                    flex="1"
+                    height="30px"
+                    textAlign="left"
+                    alignItems="center"
+                  >
                     Connection Options
                   </Flex>
                   <AccordionIcon />
@@ -771,7 +939,10 @@ function SdkperfJavaForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.cip && touched.cip}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.cip && touched.cip}
+                      >
                         <FormLabel htmlFor="cip" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -779,12 +950,17 @@ function SdkperfJavaForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                host (often IP:port) of the Solace PubSub+ event broker
+                                host (often IP:port) of the Solace PubSub+ event
+                                broker
                               </Text>
                             </Box>
                           </Grid>
                         </FormLabel>
-                        <Input {...field} id="cip" placeholder="E.g. localhost:55555" />
+                        <Input
+                          {...field}
+                          id="cip"
+                          placeholder="E.g. localhost:55555"
+                        />
                         <FormErrorMessage>{errors.cip}</FormErrorMessage>
                       </FormControl>
                     )}
@@ -795,7 +971,10 @@ function SdkperfJavaForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.cu && touched.cu}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.cu && touched.cu}
+                      >
                         <FormLabel htmlFor="cu" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -808,7 +987,11 @@ function SdkperfJavaForm({ jobName }) {
                             </Box>
                           </Grid>
                         </FormLabel>
-                        <Input {...field} id="cu" placeholder="E.g. user01@vpn01" />
+                        <Input
+                          {...field}
+                          id="cu"
+                          placeholder="E.g. user01@vpn01"
+                        />
                         <FormErrorMessage>{errors.cu}</FormErrorMessage>
                       </FormControl>
                     )}
@@ -819,7 +1002,10 @@ function SdkperfJavaForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.cp && touched.cp}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.cp && touched.cp}
+                      >
                         <FormLabel htmlFor="cp" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -843,7 +1029,10 @@ function SdkperfJavaForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.cc && touched.cc}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.cc && touched.cc}
+                      >
                         <FormLabel htmlFor="cc" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -867,7 +1056,10 @@ function SdkperfJavaForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.z && touched.z}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.z && touched.z}
+                      >
                         <FormLabel htmlFor="z" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -875,7 +1067,8 @@ function SdkperfJavaForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                enables compression and specifies compression level
+                                enables compression and specifies compression
+                                level
                               </Text>
                             </Box>
                           </Grid>
@@ -889,7 +1082,12 @@ function SdkperfJavaForm({ jobName }) {
               </AccordionItem>
               <AccordionItem>
                 <AccordionHeader borderBottom="1px solid #CCC">
-                  <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                  <Flex
+                    flex="1"
+                    height="30px"
+                    textAlign="left"
+                    alignItems="center"
+                  >
                     Subscription Options
                   </Flex>
                   <AccordionIcon />
@@ -909,7 +1107,8 @@ function SdkperfJavaForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of queue names from which clients will receive messages
+                                list of queue names from which clients will
+                                receive messages
                               </Text>
                             </Box>
                           </Grid>
@@ -926,7 +1125,9 @@ function SdkperfJavaForm({ jobName }) {
                             { label: "baz", value: "baz" },
                             { label: "qux", value: "qux" }
                           ]}
-                          placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                          placeholder={
+                            "Select from common topics or type and press enter to add custom topics to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -946,7 +1147,8 @@ function SdkperfJavaForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of topics that are applied as subscriptions (or mapped onto queues if used with –sql)
+                                list of topics that are applied as subscriptions
+                                (or mapped onto queues if used with –sql)
                               </Text>
                             </Box>
                           </Grid>
@@ -963,7 +1165,9 @@ function SdkperfJavaForm({ jobName }) {
                             { label: "baz", value: "baz" },
                             { label: "qux", value: "qux" }
                           ]}
-                          placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                          placeholder={
+                            "Select from common topics or type and press enter to add custom topics to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -983,7 +1187,8 @@ function SdkperfJavaForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                number of temporary queue endpoints to create per client.
+                                number of temporary queue endpoints to create
+                                per client.
                               </Text>
                             </Box>
                           </Grid>
@@ -996,7 +1201,12 @@ function SdkperfJavaForm({ jobName }) {
               </AccordionItem>
               <AccordionItem>
                 <AccordionHeader borderBottom="1px solid #CCC">
-                  <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                  <Flex
+                    flex="1"
+                    height="30px"
+                    textAlign="left"
+                    alignItems="center"
+                  >
                     Publishing Options
                   </Flex>
                   <AccordionIcon />
@@ -1016,7 +1226,8 @@ function SdkperfJavaForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of queue names to which messages will be published
+                                list of queue names to which messages will be
+                                published
                               </Text>
                             </Box>
                           </Grid>
@@ -1033,7 +1244,9 @@ function SdkperfJavaForm({ jobName }) {
                             { label: "baz", value: "baz" },
                             { label: "qux", value: "qux" }
                           ]}
-                          placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                          placeholder={
+                            "Select from common topics or type and press enter to add custom topics to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -1053,7 +1266,8 @@ function SdkperfJavaForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of topics to which messages will be published
+                                list of topics to which messages will be
+                                published
                               </Text>
                             </Box>
                           </Grid>
@@ -1070,7 +1284,9 @@ function SdkperfJavaForm({ jobName }) {
                             { label: "baz", value: "baz" },
                             { label: "qux", value: "qux" }
                           ]}
-                          placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                          placeholder={
+                            "Select from common topics or type and press enter to add custom topics to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -1090,7 +1306,8 @@ function SdkperfJavaForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                message type for published messages, default is "direct"
+                                message type for published messages, default is
+                                "direct"
                               </Text>
                             </Box>
                           </Grid>
@@ -1138,7 +1355,10 @@ function SdkperfJavaForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.mr && touched.mr}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.mr && touched.mr}
+                      >
                         <FormLabel htmlFor="mr">
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -1170,7 +1390,8 @@ function SdkperfJavaForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of sizes in bytes for auto-generated binary attachment payloads
+                                list of sizes in bytes for auto-generated binary
+                                attachment payloads
                               </Text>
                             </Box>
                           </Grid>
@@ -1186,7 +1407,9 @@ function SdkperfJavaForm({ jobName }) {
                             { label: "1 KB", value: "1000" },
                             { label: "10 KB", value: "10000" }
                           ]}
-                          placeholder={"Select from common attachment sizes or type and press enter to add custom sizes to the list..."}
+                          placeholder={
+                            "Select from common attachment sizes or type and press enter to add custom sizes to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -1196,7 +1419,12 @@ function SdkperfJavaForm({ jobName }) {
               </AccordionItem>
               <AccordionItem>
                 <AccordionHeader borderBottom="1px solid #CCC">
-                  <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                  <Flex
+                    flex="1"
+                    height="30px"
+                    textAlign="left"
+                    alignItems="center"
+                  >
                     General Options
                   </Flex>
                   <AccordionIcon />
@@ -1208,19 +1436,29 @@ function SdkperfJavaForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.q && touched.q}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.q && touched.q}
+                      >
                         <Grid templateColumns="75px 1fr 200px" columnGap={4}>
                           <Box>
                             <Text>-q</Text>
                           </Box>
                           <Box>
                             <Text fontStyle="italic" as="i" color="gray.500">
-                              enable quiet mode to suppress real time message rates
+                              enable quiet mode to suppress real time message
+                              rates
                             </Text>
                           </Box>
                           <Stack isInline spacing={4}>
                             <Text>Enabled?</Text>
-                            <Input {...field} id="q" type="checkbox" width="auto" height="auto" />
+                            <Input
+                              {...field}
+                              id="q"
+                              type="checkbox"
+                              width="auto"
+                              height="auto"
+                            />
                           </Stack>
                         </Grid>
                         <FormErrorMessage>{errors.q}</FormErrorMessage>
@@ -1233,19 +1471,29 @@ function SdkperfJavaForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.md && touched.md}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.md && touched.md}
+                      >
                         <Grid templateColumns="75px 1fr 200px" columnGap={4}>
                           <Box>
                             <Text>-md</Text>
                           </Box>
                           <Box>
                             <Text fontStyle="italic" as="i" color="gray.500">
-                              dump all received messages to the screen as text. Do not use this with high message rates.
+                              dump all received messages to the screen as text.
+                              Do not use this with high message rates.
                             </Text>
                           </Box>
                           <Stack isInline spacing={4}>
                             <Text>Enabled?</Text>
-                            <Input {...field} id="md" type="checkbox" width="auto" height="auto" />
+                            <Input
+                              {...field}
+                              id="md"
+                              type="checkbox"
+                              width="auto"
+                              height="auto"
+                            />
                           </Stack>
                         </Grid>
                         <FormErrorMessage>{errors.md}</FormErrorMessage>
@@ -1304,7 +1552,12 @@ function SdkperfJmsForm({ jobName }) {
             <Accordion allowMultiple>
               <AccordionItem>
                 <AccordionHeader borderBottom="1px solid #CCC">
-                  <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                  <Flex
+                    flex="1"
+                    height="30px"
+                    textAlign="left"
+                    alignItems="center"
+                  >
                     Connection Options
                   </Flex>
                   <AccordionIcon />
@@ -1316,7 +1569,10 @@ function SdkperfJmsForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.cip && touched.cip}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.cip && touched.cip}
+                      >
                         <FormLabel htmlFor="cip" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -1324,12 +1580,17 @@ function SdkperfJmsForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                host (often IP:port) of the Solace PubSub+ event broker
+                                host (often IP:port) of the Solace PubSub+ event
+                                broker
                               </Text>
                             </Box>
                           </Grid>
                         </FormLabel>
-                        <Input {...field} id="cip" placeholder="E.g. localhost:55555" />
+                        <Input
+                          {...field}
+                          id="cip"
+                          placeholder="E.g. localhost:55555"
+                        />
                         <FormErrorMessage>{errors.cip}</FormErrorMessage>
                       </FormControl>
                     )}
@@ -1340,7 +1601,10 @@ function SdkperfJmsForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.cu && touched.cu}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.cu && touched.cu}
+                      >
                         <FormLabel htmlFor="cu" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -1353,7 +1617,11 @@ function SdkperfJmsForm({ jobName }) {
                             </Box>
                           </Grid>
                         </FormLabel>
-                        <Input {...field} id="cu" placeholder="E.g. user01@vpn01" />
+                        <Input
+                          {...field}
+                          id="cu"
+                          placeholder="E.g. user01@vpn01"
+                        />
                         <FormErrorMessage>{errors.cu}</FormErrorMessage>
                       </FormControl>
                     )}
@@ -1364,7 +1632,10 @@ function SdkperfJmsForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.cp && touched.cp}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.cp && touched.cp}
+                      >
                         <FormLabel htmlFor="cp" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -1388,7 +1659,10 @@ function SdkperfJmsForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.cc && touched.cc}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.cc && touched.cc}
+                      >
                         <FormLabel htmlFor="cc" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -1412,7 +1686,10 @@ function SdkperfJmsForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.z && touched.z}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.z && touched.z}
+                      >
                         <FormLabel htmlFor="z" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -1420,7 +1697,8 @@ function SdkperfJmsForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                enables compression and specifies compression level
+                                enables compression and specifies compression
+                                level
                               </Text>
                             </Box>
                           </Grid>
@@ -1434,7 +1712,12 @@ function SdkperfJmsForm({ jobName }) {
               </AccordionItem>
               <AccordionItem>
                 <AccordionHeader borderBottom="1px solid #CCC">
-                  <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                  <Flex
+                    flex="1"
+                    height="30px"
+                    textAlign="left"
+                    alignItems="center"
+                  >
                     Subscription Options
                   </Flex>
                   <AccordionIcon />
@@ -1454,7 +1737,8 @@ function SdkperfJmsForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of queue names from which clients will receive messages
+                                list of queue names from which clients will
+                                receive messages
                               </Text>
                             </Box>
                           </Grid>
@@ -1471,7 +1755,9 @@ function SdkperfJmsForm({ jobName }) {
                             { label: "baz", value: "baz" },
                             { label: "qux", value: "qux" }
                           ]}
-                          placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                          placeholder={
+                            "Select from common topics or type and press enter to add custom topics to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -1491,7 +1777,8 @@ function SdkperfJmsForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of topics that are applied as subscriptions (or mapped onto queues if used with –sql)
+                                list of topics that are applied as subscriptions
+                                (or mapped onto queues if used with –sql)
                               </Text>
                             </Box>
                           </Grid>
@@ -1508,7 +1795,9 @@ function SdkperfJmsForm({ jobName }) {
                             { label: "baz", value: "baz" },
                             { label: "qux", value: "qux" }
                           ]}
-                          placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                          placeholder={
+                            "Select from common topics or type and press enter to add custom topics to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -1528,7 +1817,8 @@ function SdkperfJmsForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                number of temporary queue endpoints to create per client.
+                                number of temporary queue endpoints to create
+                                per client.
                               </Text>
                             </Box>
                           </Grid>
@@ -1541,7 +1831,12 @@ function SdkperfJmsForm({ jobName }) {
               </AccordionItem>
               <AccordionItem>
                 <AccordionHeader borderBottom="1px solid #CCC">
-                  <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                  <Flex
+                    flex="1"
+                    height="30px"
+                    textAlign="left"
+                    alignItems="center"
+                  >
                     Publishing Options
                   </Flex>
                   <AccordionIcon />
@@ -1561,7 +1856,8 @@ function SdkperfJmsForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of queue names to which messages will be published
+                                list of queue names to which messages will be
+                                published
                               </Text>
                             </Box>
                           </Grid>
@@ -1578,7 +1874,9 @@ function SdkperfJmsForm({ jobName }) {
                             { label: "baz", value: "baz" },
                             { label: "qux", value: "qux" }
                           ]}
-                          placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                          placeholder={
+                            "Select from common topics or type and press enter to add custom topics to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -1598,7 +1896,8 @@ function SdkperfJmsForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of topics to which messages will be published
+                                list of topics to which messages will be
+                                published
                               </Text>
                             </Box>
                           </Grid>
@@ -1615,7 +1914,9 @@ function SdkperfJmsForm({ jobName }) {
                             { label: "baz", value: "baz" },
                             { label: "qux", value: "qux" }
                           ]}
-                          placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                          placeholder={
+                            "Select from common topics or type and press enter to add custom topics to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -1635,7 +1936,8 @@ function SdkperfJmsForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                message type for published messages, default is "direct"
+                                message type for published messages, default is
+                                "direct"
                               </Text>
                             </Box>
                           </Grid>
@@ -1683,7 +1985,10 @@ function SdkperfJmsForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.mr && touched.mr}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.mr && touched.mr}
+                      >
                         <FormLabel htmlFor="mr">
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -1715,7 +2020,8 @@ function SdkperfJmsForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of sizes in bytes for auto-generated binary attachment payloads
+                                list of sizes in bytes for auto-generated binary
+                                attachment payloads
                               </Text>
                             </Box>
                           </Grid>
@@ -1731,7 +2037,9 @@ function SdkperfJmsForm({ jobName }) {
                             { label: "1 KB", value: "1000" },
                             { label: "10 KB", value: "10000" }
                           ]}
-                          placeholder={"Select from common attachment sizes or type and press enter to add custom sizes to the list..."}
+                          placeholder={
+                            "Select from common attachment sizes or type and press enter to add custom sizes to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -1741,7 +2049,12 @@ function SdkperfJmsForm({ jobName }) {
               </AccordionItem>
               <AccordionItem>
                 <AccordionHeader borderBottom="1px solid #CCC">
-                  <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                  <Flex
+                    flex="1"
+                    height="30px"
+                    textAlign="left"
+                    alignItems="center"
+                  >
                     General Options
                   </Flex>
                   <AccordionIcon />
@@ -1753,19 +2066,29 @@ function SdkperfJmsForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.q && touched.q}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.q && touched.q}
+                      >
                         <Grid templateColumns="75px 1fr 200px" columnGap={4}>
                           <Box>
                             <Text>-q</Text>
                           </Box>
                           <Box>
                             <Text fontStyle="italic" as="i" color="gray.500">
-                              enable quiet mode to suppress real time message rates
+                              enable quiet mode to suppress real time message
+                              rates
                             </Text>
                           </Box>
                           <Stack isInline spacing={4}>
                             <Text>Enabled?</Text>
-                            <Input {...field} id="q" type="checkbox" width="auto" height="auto" />
+                            <Input
+                              {...field}
+                              id="q"
+                              type="checkbox"
+                              width="auto"
+                              height="auto"
+                            />
                           </Stack>
                         </Grid>
                         <FormErrorMessage>{errors.q}</FormErrorMessage>
@@ -1778,19 +2101,29 @@ function SdkperfJmsForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.md && touched.md}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.md && touched.md}
+                      >
                         <Grid templateColumns="75px 1fr 200px" columnGap={4}>
                           <Box>
                             <Text>-md</Text>
                           </Box>
                           <Box>
                             <Text fontStyle="italic" as="i" color="gray.500">
-                              dump all received messages to the screen as text. Do not use this with high message rates.
+                              dump all received messages to the screen as text.
+                              Do not use this with high message rates.
                             </Text>
                           </Box>
                           <Stack isInline spacing={4}>
                             <Text>Enabled?</Text>
-                            <Input {...field} id="md" type="checkbox" width="auto" height="auto" />
+                            <Input
+                              {...field}
+                              id="md"
+                              type="checkbox"
+                              width="auto"
+                              height="auto"
+                            />
                           </Stack>
                         </Grid>
                         <FormErrorMessage>{errors.md}</FormErrorMessage>
@@ -1801,7 +2134,12 @@ function SdkperfJmsForm({ jobName }) {
               </AccordionItem>
               <AccordionItem>
                 <AccordionHeader borderBottom="1px solid #CCC">
-                  <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                  <Flex
+                    flex="1"
+                    height="30px"
+                    textAlign="left"
+                    alignItems="center"
+                  >
                     JMS Options
                   </Flex>
                   <AccordionIcon />
@@ -1813,7 +2151,10 @@ function SdkperfJmsForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.jcf && touched.jcf}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.jcf && touched.jcf}
+                      >
                         <FormLabel htmlFor="jcf" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -1826,7 +2167,11 @@ function SdkperfJmsForm({ jobName }) {
                             </Box>
                           </Grid>
                         </FormLabel>
-                        <Input {...field} id="jcf" placeholder="E.g. /jms/cf/demo" />
+                        <Input
+                          {...field}
+                          id="jcf"
+                          placeholder="E.g. /jms/cf/demo"
+                        />
                         <FormErrorMessage>{errors.jcf}</FormErrorMessage>
                       </FormControl>
                     )}
@@ -1837,19 +2182,30 @@ function SdkperfJmsForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.jndi && touched.jndi}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.jndi && touched.jndi}
+                      >
                         <Grid templateColumns="150px 1fr 200px">
                           <Box>
                             <Text>-jndi</Text>
                           </Box>
                           <Box>
                             <Text fontStyle="italic" as="i" color="gray.500">
-                              enable JNDI topic and queue lookups. By default queues and topics endpoints are created from the Session without JNDI lookup.
+                              enable JNDI topic and queue lookups. By default
+                              queues and topics endpoints are created from the
+                              Session without JNDI lookup.
                             </Text>
                           </Box>
                           <Stack isInline spacing={4}>
                             <Text>Enabled?</Text>
-                            <Input {...field} id="jndi" type="checkbox" width="auto" height="auto" />
+                            <Input
+                              {...field}
+                              id="jndi"
+                              type="checkbox"
+                              width="auto"
+                              height="auto"
+                            />
                           </Stack>
                         </Grid>
                         <FormErrorMessage>{errors.jndi}</FormErrorMessage>
@@ -1906,7 +2262,12 @@ function SdkperfMqttForm({ jobName }) {
             <Accordion allowMultiple>
               <AccordionItem>
                 <AccordionHeader borderBottom="1px solid #CCC">
-                  <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                  <Flex
+                    flex="1"
+                    height="30px"
+                    textAlign="left"
+                    alignItems="center"
+                  >
                     Connection Options
                   </Flex>
                   <AccordionIcon />
@@ -1918,7 +2279,10 @@ function SdkperfMqttForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.cip && touched.cip}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.cip && touched.cip}
+                      >
                         <FormLabel htmlFor="cip" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -1926,12 +2290,17 @@ function SdkperfMqttForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                host (often IP:port) of the Solace PubSub+ event broker
+                                host (often IP:port) of the Solace PubSub+ event
+                                broker
                               </Text>
                             </Box>
                           </Grid>
                         </FormLabel>
-                        <Input {...field} id="cip" placeholder="E.g. localhost:55555" />
+                        <Input
+                          {...field}
+                          id="cip"
+                          placeholder="E.g. localhost:55555"
+                        />
                         <FormErrorMessage>{errors.cip}</FormErrorMessage>
                       </FormControl>
                     )}
@@ -1942,7 +2311,10 @@ function SdkperfMqttForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.cu && touched.cu}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.cu && touched.cu}
+                      >
                         <FormLabel htmlFor="cu" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -1955,7 +2327,11 @@ function SdkperfMqttForm({ jobName }) {
                             </Box>
                           </Grid>
                         </FormLabel>
-                        <Input {...field} id="cu" placeholder="E.g. user01@vpn01" />
+                        <Input
+                          {...field}
+                          id="cu"
+                          placeholder="E.g. user01@vpn01"
+                        />
                         <FormErrorMessage>{errors.cu}</FormErrorMessage>
                       </FormControl>
                     )}
@@ -1966,7 +2342,10 @@ function SdkperfMqttForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.cp && touched.cp}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.cp && touched.cp}
+                      >
                         <FormLabel htmlFor="cp" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -1990,7 +2369,10 @@ function SdkperfMqttForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.cc && touched.cc}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.cc && touched.cc}
+                      >
                         <FormLabel htmlFor="cc" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -2014,7 +2396,10 @@ function SdkperfMqttForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.z && touched.z}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.z && touched.z}
+                      >
                         <FormLabel htmlFor="z" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -2022,7 +2407,8 @@ function SdkperfMqttForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                enables compression and specifies compression level
+                                enables compression and specifies compression
+                                level
                               </Text>
                             </Box>
                           </Grid>
@@ -2036,7 +2422,12 @@ function SdkperfMqttForm({ jobName }) {
               </AccordionItem>
               <AccordionItem>
                 <AccordionHeader borderBottom="1px solid #CCC">
-                  <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                  <Flex
+                    flex="1"
+                    height="30px"
+                    textAlign="left"
+                    alignItems="center"
+                  >
                     Subscription Options
                   </Flex>
                   <AccordionIcon />
@@ -2056,7 +2447,8 @@ function SdkperfMqttForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of queue names from which clients will receive messages
+                                list of queue names from which clients will
+                                receive messages
                               </Text>
                             </Box>
                           </Grid>
@@ -2073,7 +2465,9 @@ function SdkperfMqttForm({ jobName }) {
                             { label: "baz", value: "baz" },
                             { label: "qux", value: "qux" }
                           ]}
-                          placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                          placeholder={
+                            "Select from common topics or type and press enter to add custom topics to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -2093,7 +2487,8 @@ function SdkperfMqttForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of topics that are applied as subscriptions (or mapped onto queues if used with –sql)
+                                list of topics that are applied as subscriptions
+                                (or mapped onto queues if used with –sql)
                               </Text>
                             </Box>
                           </Grid>
@@ -2110,7 +2505,9 @@ function SdkperfMqttForm({ jobName }) {
                             { label: "baz", value: "baz" },
                             { label: "qux", value: "qux" }
                           ]}
-                          placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                          placeholder={
+                            "Select from common topics or type and press enter to add custom topics to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -2130,7 +2527,8 @@ function SdkperfMqttForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                number of temporary queue endpoints to create per client.
+                                number of temporary queue endpoints to create
+                                per client.
                               </Text>
                             </Box>
                           </Grid>
@@ -2143,7 +2541,12 @@ function SdkperfMqttForm({ jobName }) {
               </AccordionItem>
               <AccordionItem>
                 <AccordionHeader borderBottom="1px solid #CCC">
-                  <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                  <Flex
+                    flex="1"
+                    height="30px"
+                    textAlign="left"
+                    alignItems="center"
+                  >
                     Publishing Options
                   </Flex>
                   <AccordionIcon />
@@ -2163,7 +2566,8 @@ function SdkperfMqttForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of queue names to which messages will be published
+                                list of queue names to which messages will be
+                                published
                               </Text>
                             </Box>
                           </Grid>
@@ -2180,7 +2584,9 @@ function SdkperfMqttForm({ jobName }) {
                             { label: "baz", value: "baz" },
                             { label: "qux", value: "qux" }
                           ]}
-                          placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                          placeholder={
+                            "Select from common topics or type and press enter to add custom topics to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -2200,7 +2606,8 @@ function SdkperfMqttForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of topics to which messages will be published
+                                list of topics to which messages will be
+                                published
                               </Text>
                             </Box>
                           </Grid>
@@ -2217,7 +2624,9 @@ function SdkperfMqttForm({ jobName }) {
                             { label: "baz", value: "baz" },
                             { label: "qux", value: "qux" }
                           ]}
-                          placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                          placeholder={
+                            "Select from common topics or type and press enter to add custom topics to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -2237,7 +2646,8 @@ function SdkperfMqttForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                message type for published messages, default is "direct"
+                                message type for published messages, default is
+                                "direct"
                               </Text>
                             </Box>
                           </Grid>
@@ -2285,7 +2695,10 @@ function SdkperfMqttForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.mr && touched.mr}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.mr && touched.mr}
+                      >
                         <FormLabel htmlFor="mr">
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -2317,7 +2730,8 @@ function SdkperfMqttForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of sizes in bytes for auto-generated binary attachment payloads
+                                list of sizes in bytes for auto-generated binary
+                                attachment payloads
                               </Text>
                             </Box>
                           </Grid>
@@ -2333,7 +2747,9 @@ function SdkperfMqttForm({ jobName }) {
                             { label: "1 KB", value: "1000" },
                             { label: "10 KB", value: "10000" }
                           ]}
-                          placeholder={"Select from common attachment sizes or type and press enter to add custom sizes to the list..."}
+                          placeholder={
+                            "Select from common attachment sizes or type and press enter to add custom sizes to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -2343,7 +2759,12 @@ function SdkperfMqttForm({ jobName }) {
               </AccordionItem>
               <AccordionItem>
                 <AccordionHeader borderBottom="1px solid #CCC">
-                  <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                  <Flex
+                    flex="1"
+                    height="30px"
+                    textAlign="left"
+                    alignItems="center"
+                  >
                     General Options
                   </Flex>
                   <AccordionIcon />
@@ -2355,19 +2776,29 @@ function SdkperfMqttForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.q && touched.q}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.q && touched.q}
+                      >
                         <Grid templateColumns="75px 1fr 200px" columnGap={4}>
                           <Box>
                             <Text>-q</Text>
                           </Box>
                           <Box>
                             <Text fontStyle="italic" as="i" color="gray.500">
-                              enable quiet mode to suppress real time message rates
+                              enable quiet mode to suppress real time message
+                              rates
                             </Text>
                           </Box>
                           <Stack isInline spacing={4}>
                             <Text>Enabled?</Text>
-                            <Input {...field} id="q" type="checkbox" width="auto" height="auto" />
+                            <Input
+                              {...field}
+                              id="q"
+                              type="checkbox"
+                              width="auto"
+                              height="auto"
+                            />
                           </Stack>
                         </Grid>
                         <FormErrorMessage>{errors.q}</FormErrorMessage>
@@ -2380,19 +2811,29 @@ function SdkperfMqttForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.md && touched.md}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.md && touched.md}
+                      >
                         <Grid templateColumns="75px 1fr 200px" columnGap={4}>
                           <Box>
                             <Text>-md</Text>
                           </Box>
                           <Box>
                             <Text fontStyle="italic" as="i" color="gray.500">
-                              dump all received messages to the screen as text. Do not use this with high message rates.
+                              dump all received messages to the screen as text.
+                              Do not use this with high message rates.
                             </Text>
                           </Box>
                           <Stack isInline spacing={4}>
                             <Text>Enabled?</Text>
-                            <Input {...field} id="md" type="checkbox" width="auto" height="auto" />
+                            <Input
+                              {...field}
+                              id="md"
+                              type="checkbox"
+                              width="auto"
+                              height="auto"
+                            />
                           </Stack>
                         </Grid>
                         <FormErrorMessage>{errors.md}</FormErrorMessage>
@@ -2449,7 +2890,12 @@ function SdkperfRestForm({ jobName }) {
             <Accordion allowMultiple>
               <AccordionItem>
                 <AccordionHeader borderBottom="1px solid #CCC">
-                  <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                  <Flex
+                    flex="1"
+                    height="30px"
+                    textAlign="left"
+                    alignItems="center"
+                  >
                     Connection Options
                   </Flex>
                   <AccordionIcon />
@@ -2461,7 +2907,10 @@ function SdkperfRestForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.cip && touched.cip}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.cip && touched.cip}
+                      >
                         <FormLabel htmlFor="cip" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -2469,12 +2918,17 @@ function SdkperfRestForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                host (often IP:port) of the Solace PubSub+ event broker
+                                host (often IP:port) of the Solace PubSub+ event
+                                broker
                               </Text>
                             </Box>
                           </Grid>
                         </FormLabel>
-                        <Input {...field} id="cip" placeholder="E.g. localhost:55555" />
+                        <Input
+                          {...field}
+                          id="cip"
+                          placeholder="E.g. localhost:55555"
+                        />
                         <FormErrorMessage>{errors.cip}</FormErrorMessage>
                       </FormControl>
                     )}
@@ -2485,7 +2939,10 @@ function SdkperfRestForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.cu && touched.cu}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.cu && touched.cu}
+                      >
                         <FormLabel htmlFor="cu" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -2498,7 +2955,11 @@ function SdkperfRestForm({ jobName }) {
                             </Box>
                           </Grid>
                         </FormLabel>
-                        <Input {...field} id="cu" placeholder="E.g. user01@vpn01" />
+                        <Input
+                          {...field}
+                          id="cu"
+                          placeholder="E.g. user01@vpn01"
+                        />
                         <FormErrorMessage>{errors.cu}</FormErrorMessage>
                       </FormControl>
                     )}
@@ -2509,7 +2970,10 @@ function SdkperfRestForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.cp && touched.cp}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.cp && touched.cp}
+                      >
                         <FormLabel htmlFor="cp" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -2533,7 +2997,10 @@ function SdkperfRestForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.cc && touched.cc}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.cc && touched.cc}
+                      >
                         <FormLabel htmlFor="cc" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -2557,7 +3024,10 @@ function SdkperfRestForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.z && touched.z}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.z && touched.z}
+                      >
                         <FormLabel htmlFor="z" w={"100%"}>
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -2565,7 +3035,8 @@ function SdkperfRestForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                enables compression and specifies compression level
+                                enables compression and specifies compression
+                                level
                               </Text>
                             </Box>
                           </Grid>
@@ -2579,7 +3050,12 @@ function SdkperfRestForm({ jobName }) {
               </AccordionItem>
               <AccordionItem>
                 <AccordionHeader borderBottom="1px solid #CCC">
-                  <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                  <Flex
+                    flex="1"
+                    height="30px"
+                    textAlign="left"
+                    alignItems="center"
+                  >
                     Subscription Options
                   </Flex>
                   <AccordionIcon />
@@ -2599,7 +3075,8 @@ function SdkperfRestForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of queue names from which clients will receive messages
+                                list of queue names from which clients will
+                                receive messages
                               </Text>
                             </Box>
                           </Grid>
@@ -2616,7 +3093,9 @@ function SdkperfRestForm({ jobName }) {
                             { label: "baz", value: "baz" },
                             { label: "qux", value: "qux" }
                           ]}
-                          placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                          placeholder={
+                            "Select from common topics or type and press enter to add custom topics to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -2636,7 +3115,8 @@ function SdkperfRestForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of topics that are applied as subscriptions (or mapped onto queues if used with –sql)
+                                list of topics that are applied as subscriptions
+                                (or mapped onto queues if used with –sql)
                               </Text>
                             </Box>
                           </Grid>
@@ -2653,7 +3133,9 @@ function SdkperfRestForm({ jobName }) {
                             { label: "baz", value: "baz" },
                             { label: "qux", value: "qux" }
                           ]}
-                          placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                          placeholder={
+                            "Select from common topics or type and press enter to add custom topics to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -2673,7 +3155,8 @@ function SdkperfRestForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                number of temporary queue endpoints to create per client.
+                                number of temporary queue endpoints to create
+                                per client.
                               </Text>
                             </Box>
                           </Grid>
@@ -2686,7 +3169,12 @@ function SdkperfRestForm({ jobName }) {
               </AccordionItem>
               <AccordionItem>
                 <AccordionHeader borderBottom="1px solid #CCC">
-                  <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                  <Flex
+                    flex="1"
+                    height="30px"
+                    textAlign="left"
+                    alignItems="center"
+                  >
                     Publishing Options
                   </Flex>
                   <AccordionIcon />
@@ -2706,7 +3194,8 @@ function SdkperfRestForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of queue names to which messages will be published
+                                list of queue names to which messages will be
+                                published
                               </Text>
                             </Box>
                           </Grid>
@@ -2723,7 +3212,9 @@ function SdkperfRestForm({ jobName }) {
                             { label: "baz", value: "baz" },
                             { label: "qux", value: "qux" }
                           ]}
-                          placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                          placeholder={
+                            "Select from common topics or type and press enter to add custom topics to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -2743,7 +3234,8 @@ function SdkperfRestForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of topics to which messages will be published
+                                list of topics to which messages will be
+                                published
                               </Text>
                             </Box>
                           </Grid>
@@ -2760,7 +3252,9 @@ function SdkperfRestForm({ jobName }) {
                             { label: "baz", value: "baz" },
                             { label: "qux", value: "qux" }
                           ]}
-                          placeholder={"Select from common topics or type and press enter to add custom topics to the list..."}
+                          placeholder={
+                            "Select from common topics or type and press enter to add custom topics to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -2780,7 +3274,8 @@ function SdkperfRestForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                message type for published messages, default is "direct"
+                                message type for published messages, default is
+                                "direct"
                               </Text>
                             </Box>
                           </Grid>
@@ -2828,7 +3323,10 @@ function SdkperfRestForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.mr && touched.mr}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.mr && touched.mr}
+                      >
                         <FormLabel htmlFor="mr">
                           <Grid templateColumns="150px 1fr">
                             <Box>
@@ -2860,7 +3358,8 @@ function SdkperfRestForm({ jobName }) {
                             </Box>
                             <Box>
                               <Text fontStyle="italic" as="i" color="gray.500">
-                                list of sizes in bytes for auto-generated binary attachment payloads
+                                list of sizes in bytes for auto-generated binary
+                                attachment payloads
                               </Text>
                             </Box>
                           </Grid>
@@ -2876,7 +3375,9 @@ function SdkperfRestForm({ jobName }) {
                             { label: "1 KB", value: "1000" },
                             { label: "10 KB", value: "10000" }
                           ]}
-                          placeholder={"Select from common attachment sizes or type and press enter to add custom sizes to the list..."}
+                          placeholder={
+                            "Select from common attachment sizes or type and press enter to add custom sizes to the list..."
+                          }
                           isMulti={true}
                         />
                       </FormControl>
@@ -2886,7 +3387,12 @@ function SdkperfRestForm({ jobName }) {
               </AccordionItem>
               <AccordionItem>
                 <AccordionHeader borderBottom="1px solid #CCC">
-                  <Flex flex="1" height="30px" textAlign="left" alignItems="center">
+                  <Flex
+                    flex="1"
+                    height="30px"
+                    textAlign="left"
+                    alignItems="center"
+                  >
                     General Options
                   </Flex>
                   <AccordionIcon />
@@ -2898,19 +3404,29 @@ function SdkperfRestForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.q && touched.q}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.q && touched.q}
+                      >
                         <Grid templateColumns="75px 1fr 200px" columnGap={4}>
                           <Box>
                             <Text>-q</Text>
                           </Box>
                           <Box>
                             <Text fontStyle="italic" as="i" color="gray.500">
-                              enable quiet mode to suppress real time message rates
+                              enable quiet mode to suppress real time message
+                              rates
                             </Text>
                           </Box>
                           <Stack isInline spacing={4}>
                             <Text>Enabled?</Text>
-                            <Input {...field} id="q" type="checkbox" width="auto" height="auto" />
+                            <Input
+                              {...field}
+                              id="q"
+                              type="checkbox"
+                              width="auto"
+                              height="auto"
+                            />
                           </Stack>
                         </Grid>
                         <FormErrorMessage>{errors.q}</FormErrorMessage>
@@ -2923,19 +3439,29 @@ function SdkperfRestForm({ jobName }) {
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta
                     }) => (
-                      <FormControl marginBottom={theme.space[4]} isInvalid={errors.md && touched.md}>
+                      <FormControl
+                        marginBottom={theme.space[4]}
+                        isInvalid={errors.md && touched.md}
+                      >
                         <Grid templateColumns="75px 1fr 200px" columnGap={4}>
                           <Box>
                             <Text>-md</Text>
                           </Box>
                           <Box>
                             <Text fontStyle="italic" as="i" color="gray.500">
-                              dump all received messages to the screen as text. Do not use this with high message rates.
+                              dump all received messages to the screen as text.
+                              Do not use this with high message rates.
                             </Text>
                           </Box>
                           <Stack isInline spacing={4}>
                             <Text>Enabled?</Text>
-                            <Input {...field} id="md" type="checkbox" width="auto" height="auto" />
+                            <Input
+                              {...field}
+                              id="md"
+                              type="checkbox"
+                              width="auto"
+                              height="auto"
+                            />
                           </Stack>
                         </Grid>
                         <FormErrorMessage>{errors.md}</FormErrorMessage>

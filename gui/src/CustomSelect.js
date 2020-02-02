@@ -12,9 +12,11 @@ const customStyles = {
   })
 };
 
-function CustomCreatableSelect({ placeholder, field, form, options, isMulti = false }) {
+function CustomCreatableSelect({ placeholder, field, form, options, isMulti = false, updateParentCb }) {
   const onChange = option => {
     form.setFieldValue(field.name, isMulti ? option.map(item => item.value) : option.value);
+    // I wanted to use the Formik context in the form's parent component, this was my solution...
+    updateParentCb ? updateParentCb(option.value) : null;
   };
 
   const getValue = () => {
@@ -41,6 +43,7 @@ function CustomCreatableSelect({ placeholder, field, form, options, isMulti = fa
 function CustomSelect({ placeholder, field, form, options, isMulti = false, updateParentCb }) {
   const onChange = option => {
     form.setFieldValue(field.name, isMulti ? option.map(item => item.value) : option.value);
+    // I wanted to use the Formik context in the form's parent component, this was my solution...
     updateParentCb ? updateParentCb(option.value) : null;
   };
 
