@@ -1,47 +1,41 @@
 /**
  * orchestrator.js
+ * datastructure used to organize and store client state
  * @author Andrew Roberts
  */
 
 import produce from "immer";
-import WorkerNode from "../src/worker-node";
+import Worker from "../src/worker";
 
 function Orchestrator(orchestratorConfig) {
-  let workerNodes = produce({}, draft => {}); // produces empty immutable object
   let jobs = produce({}, draft => {});
-  // let jobGroups = produce({}, draft => {});
   let jobAssignments = produce({}, draft => {}); // jobId: {workerNodeIp: string, cpuNumbers: [num, ...]}
+  let workers = produce({}, draft => {}); // produces empty immutable object
 
-  // getters
-
-  function getWorkerNodes() {
-    return workerNodes;
+  function start() {
+    orchestratorConfig.workerNodes.forEach(workerConfig => {
+      let worker = Worker(workerConfig.ip, workerConfig.numCpus);
+      let addResult = addWorker(worker);
+      // prevent user from starting orchestrator if there are duplicate worker nodes or if the config is malformed
+      if (!addResult) {
+        console.log(
+          "Duplicates detected in config file, please check worker node IPs."
+        );
+        process.exit(1);
+      }
+    });
   }
 
   function getJobs() {
     return jobs;
   }
 
-  // function getJobGroups() {
-  //   return jobGroups;
-  // }
-
   function getJobAssignments() {
     return jobAssignments;
   }
 
-  // methods
-
-  function start() {
-    orchestratorConfig.workerNodes.forEach(workerNodeConfig => {
-      let workerNode = WorkerNode(workerNodeConfig.ip, workerNodeConfig.numCpus);
-      let addResult = addWorkerNode(workerNode);
-      // prevent user from starting orchestrator if there are duplicate worker nodes or if the config is malformed
-      if (!addResult) {
-        console.log("Duplicates detected in config file, please check worker node IPs.");
-        process.exit(1);
-      }
-    });
+  function getWorkers() {
+    return workers;
   }
 
   function addJob(job) {
@@ -76,13 +70,13 @@ function Orchestrator(orchestratorConfig) {
     return jobId;
   }
 
-  function addWorkerNode(workerNode) {
+  function addWorker(worker) {
     // prevent orchestrator from adding duplicates
-    if (workerNode.ip in workerNodes) {
+    if (worker.ip in workerNodes) {
       return false;
     }
     workerNodes = produce(workerNodes, draft => {
-      draft[workerNode.ip] = workerNode;
+      draft[worker.ip] = worker;
     });
     return true;
   }
@@ -100,7 +94,7 @@ function Orchestrator(orchestratorConfig) {
 
   return produce({}, draft => {
     // getters
-    draft.getWorkerNodes = getWorkerNodes;
+    draft.getWorkers = getWorkers;
     draft.getJobs = getJobs;
     // draft.getJobGroups = getJobGroups;
     draft.getJobAssignments = getJobAssignments;
@@ -109,7 +103,7 @@ function Orchestrator(orchestratorConfig) {
     draft.addJob = addJob;
     draft.removeJob = removeJob;
     draft.assignJob = assignJob;
-    draft.addWorkerNode = addWorkerNode;
+    draft.addWorker = addWorker;
     draft.removeWorkerNode = removeWorkerNode;
   });
 }

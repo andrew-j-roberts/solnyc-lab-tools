@@ -40,12 +40,19 @@ const jobMachine = Machine({
   }
 });
 
-function Job(id, name, command, stateMachine = jobMachine.initialState) {
+function Job(
+  id,
+  name,
+  command_language,
+  command_options,
+  stateMachine = jobMachine.initialState
+) {
   // immer produce: returns deep frozen object
   return produce({}, draft => {
     draft.id = id;
     draft.name = name;
-    draft.command = command;
+    draft.command_language = command_language;
+    draft.command_options = command_options;
     draft.stateMachine = stateMachine;
   });
 }

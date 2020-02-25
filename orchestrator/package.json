@@ -6,8 +6,9 @@
   "author": "Andrew Roberts",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --watch src --exec yarn run test",
-    "test": "jest test/orchestrator.test.js"
+    "start": "nodemon --exec babel-node src/index.js",
+    "test": "jest test/agent.test.js",
+    "test-watch": "nodemon --watch src --exec yarn run test"
   },
   "jest": {
     "transform": {
@@ -17,13 +18,18 @@
   "devDependencies": {
     "@babel/cli": "^7.8.3",
     "@babel/core": "^7.8.3",
+    "@babel/node": "^7.8.4",
     "@babel/preset-env": "^7.8.3",
     "babel-jest": "^24.9.0",
-    "jest": "^24.9.0"
+    "jest": "^24.9.0",
+    "prisma2": "^2.0.0-preview022"
   },
   "dependencies": {
+    "@prisma/client": "^2.0.0-preview022",
     "core-js": "^3.6.4",
-    "immer": "^5.3.2",
+    "dotenv": "^8.2.0",
+    "immer": "^5.3.6",
+    "mqtt": "^3.0.0",
     "regenerator-runtime": "^0.13.3",
     "shelljs": "^0.8.3",
     "xstate": "^4.7.6"
